@@ -147,7 +147,7 @@
         /* IMAGE CONTAINER */
         .card-img-wrap {
             width: 100%;
-            height: 220px;
+            height: 240px;
             background: #000;
             position: relative;
             overflow: hidden;
@@ -173,6 +173,7 @@
             padding: 4px 8px;
             border-radius: 4px;
             backdrop-filter: blur(4px);
+            z-index: 2;
         }
 
         .card-content {
@@ -196,6 +197,27 @@
             line-height: 1.5;
             margin-bottom: 16px;
             flex-grow: 1;
+        }
+
+        /* LORE / PLOT SECTION BOX */
+        .lore-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .lore-box h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-purple);
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        .lore-box p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 12px;
         }
 
         /* BUTTONS */
@@ -293,6 +315,7 @@
 </head>
 <body>
 
+    <!-- MODAL AWAL -->
     <div id="login-overlay">
         <div class="modal-box">
             <h3>[SYSTEM AWAKENING]</h3>
@@ -301,6 +324,7 @@
         </div>
     </div>
 
+    <!-- HEADER HUD -->
     <header>
         <div class="logo">SOLO LEVELING <span>ARISE</span></div>
         <div class="status-metrics">
@@ -312,13 +336,17 @@
     </header>
 
     <div class="container">
+        <!-- TAB NAVIGATION -->
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('calisthenics', this)">CALISTHENICS QUEST</button>
             <button class="tab-btn" onclick="switchTab('gym', this)">GYM DUNGEON</button>
             <button class="tab-btn" onclick="switchTab('roster', this)">HUNTER ROSTER</button>
+            <button class="tab-btn" onclick="switchTab('plot', this)">PLOT & LORE</button>
+            <button class="tab-btn" onclick="switchTab('comic', this)">MANHWA ARC</button>
             <button class="tab-btn" onclick="switchTab('ranks', this)">RANK DATABASE</button>
         </div>
 
+        <!-- SECTION 1: CALISTHENICS -->
         <div id="calisthenics" class="section-view active">
             <div class="grid">
                 <div class="ui-card" data-id="c1">
@@ -345,6 +373,7 @@
             </div>
         </div>
 
+        <!-- SECTION 2: GYM -->
         <div id="gym" class="section-view">
             <div class="grid">
                 <div class="ui-card" data-id="g1">
@@ -371,18 +400,18 @@
             </div>
         </div>
 
+        <!-- SECTION 3: ROSTER -->
         <div id="roster" class="section-view">
-            
             <div class="category-header">MAIN CHARACTERS & ALLIES</div>
             <div class="grid">
                 <div class="ui-card">
                     <div class="card-img-wrap">
                         <span class="card-tag">S-RANK</span>
-                        <img src="https://m.media-amazon.com/images/M/MV5BN2JiYmQ2YmYtYzRiZi00N2UyLWFkNjktOWM4ODFhZTJmNWZmXkEyXkFqcGdeQXVyMTE0MzQwMjgz._V1_.jpg" alt="Sung Jin-Woo">
+                        <img src="https://images.alphacoders.com/134/1349581.png" alt="Sung Jin-Woo">
                     </div>
                     <div class="card-content">
                         <div class="card-title">Sung Jin-Woo</div>
-                        <div class="card-desc">Shadow Monarch. Penguasa pasukan bayangan.</div>
+                        <div class="card-desc">Shadow Monarch. Penguasa pasukan bayangan tak terkalahkan.</div>
                     </div>
                 </div>
 
@@ -393,7 +422,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-title">Yoo Jin-Ho</div>
-                        <div class="card-desc">Wakil Guild Ahjin, sahabat setia Jin-Woo.</div>
+                        <div class="card-desc">Wakil Guild Ahjin, sahabat setia Sung Jin-Woo.</div>
                     </div>
                 </div>
 
@@ -404,23 +433,12 @@
                     </div>
                     <div class="card-content">
                         <div class="card-title">Go Gun-Hee</div>
-                        <div class="card-desc">Ketua Asosiasi Hunter Korea.</div>
-                    </div>
-                </div>
-
-                <div class="ui-card">
-                    <div class="card-img-wrap">
-                        <span class="card-tag">A-RANK</span>
-                        <img src="https://static.wikia.nocookie.net/solo-leveling/images/7/77/Woo_Jinchul_Anime.png" alt="Woo Jin-Chul">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-title">Woo Jin-Chul</div>
-                        <div class="card-desc">Kepala Tim Inspeksi Asosiasi Hunter.</div>
+                        <div class="card-desc">Ketua Asosiasi Hunter Korea yang berwibawa tinggi.</div>
                     </div>
                 </div>
             </div>
 
-            <div class="category-header">S-RANK & NATIONAL LEVEL HUNTERS</div>
+            <div class="category-header">S-RANK & ELITE HUNTERS</div>
             <div class="grid">
                 <div class="ui-card">
                     <div class="card-img-wrap">
@@ -429,7 +447,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-title">Cha Hae-In</div>
-                        <div class="card-desc">Wakil Master Hunters Guild, ahli pedang presisi tinggi.</div>
+                        <div class="card-desc">Ahli pedang presisi tinggi berjuluk The Dancer.</div>
                     </div>
                 </div>
 
@@ -440,18 +458,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-title">Choi Jong-In</div>
-                        <div class="card-desc">Mage api terkuat pemusnah massal (The Ultimate Soldier).</div>
-                    </div>
-                </div>
-
-                <div class="ui-card">
-                    <div class="card-img-wrap">
-                        <span class="card-tag">S-RANK</span>
-                        <img src="https://static.wikia.nocookie.net/solo-leveling/images/d/df/Baek_Yoonho_Anime.png" alt="Baek Yoon-Ho">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-title">Baek Yoon-Ho</div>
-                        <div class="card-desc">Master White Tiger Guild, transformator harimau.</div>
+                        <div class="card-desc">Mage api pemusnah massal (The Ultimate Soldier).</div>
                     </div>
                 </div>
 
@@ -462,18 +469,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-title">Thomas Andre</div>
-                        <div class="card-desc">Hunter AS berjuluk Goliath, pertahanan absolut.</div>
-                    </div>
-                </div>
-
-                <div class="ui-card">
-                    <div class="card-img-wrap">
-                        <span class="card-tag">NATIONAL</span>
-                        <img src="https://static.wikia.nocookie.net/solo-leveling/images/1/1b/Liu_Zhigang_Manhwa.png" alt="Liu Zhigang">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-title">Liu Zhigang</div>
-                        <div class="card-desc">Hunter Nasional terkuat asal Tiongkok.</div>
+                        <div class="card-desc">Goliath, Hunter tingkat nasional terkuat asal AS.</div>
                     </div>
                 </div>
             </div>
@@ -487,7 +483,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-title">Beru</div>
-                        <div class="card-desc">Raja Semut bayangan dengan kecepatan kilat.</div>
+                        <div class="card-desc">Raja Semut bayangan dengan kecepatan super kilat.</div>
                     </div>
                 </div>
 
@@ -498,54 +494,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-title">Blood-Red Igris</div>
-                        <div class="card-desc">Ksatria zirah merah pengawal utama Jin-Woo.</div>
-                    </div>
-                </div>
-
-                <div class="ui-card">
-                    <div class="card-img-wrap">
-                        <span class="card-tag">GRAND MARSHAL</span>
-                        <img src="https://static.wikia.nocookie.net/solo-leveling/images/2/22/Bellion_Manhwa.png" alt="Bellion">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-title">Bellion</div>
-                        <div class="card-desc">Panglima tertinggi seluruh pasukan bayangan.</div>
-                    </div>
-                </div>
-
-                <div class="ui-card">
-                    <div class="card-img-wrap">
-                        <span class="card-tag">SHAMAN</span>
-                        <img src="https://static.wikia.nocookie.net/solo-leveling/images/5/5a/Tusk_Manhwa.png" alt="Tusk">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-title">Tusk</div>
-                        <div class="card-desc">High Orc Shaman pengendali sihir elemen api.</div>
-                    </div>
-                </div>
-
-                <div class="ui-card">
-                    <div class="card-img-wrap">
-                        <span class="card-tag">TANKER</span>
-                        <img src="https://static.wikia.nocookie.net/solo-leveling/images/3/37/Iron_Manhwa.png" alt="Iron">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-title">Iron</div>
-                        <div class="card-desc">Bayangan ksatria raksasa dengan skill provokasi.</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="category-header">MONARCHS</div>
-            <div class="grid">
-                <div class="ui-card">
-                    <div class="card-img-wrap">
-                        <span class="card-tag">ORIGINAL</span>
-                        <img src="https://static.wikia.nocookie.net/solo-leveling/images/e/ef/Ashborn_Manhwa.png" alt="Ashborn">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-title">Ashborn</div>
-                        <div class="card-desc">Original Shadow Monarch terdahulu.</div>
+                        <div class="card-desc">Ksatria zirah merah setia pengawal utama Jin-Woo.</div>
                     </div>
                 </div>
 
@@ -556,35 +505,50 @@
                     </div>
                     <div class="card-content">
                         <div class="card-title">Antares</div>
-                        <div class="card-desc">Raja Naga, Monarch of Destruction terkuat.</div>
-                    </div>
-                </div>
-
-                <div class="ui-card">
-                    <div class="card-img-wrap">
-                        <span class="card-tag">BEAST</span>
-                        <img src="https://static.wikia.nocookie.net/solo-leveling/images/d/d4/Rakan_Manhwa.png" alt="Rakan">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-title">Rakan</div>
-                        <div class="card-desc">Beast Monarch penguasa insting hewan buas.</div>
-                    </div>
-                </div>
-
-                <div class="ui-card">
-                    <div class="card-img-wrap">
-                        <span class="card-tag">FLAMES</span>
-                        <img src="https://static.wikia.nocookie.net/solo-leveling/images/9/91/Baran_Manhwa.png" alt="Baran">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-title">Baran</div>
-                        <div class="card-desc">Monarch of White Flames penguasa Demon Castle.</div>
+                        <div class="card-desc">Raja Naga, Monarch of Destruction terkuat di semesta.</div>
                     </div>
                 </div>
             </div>
-
         </div>
 
+        <!-- SECTION 4: PLOT & LORE -->
+        <div id="plot" class="section-view">
+            <div class="lore-box">
+                <h3>[PREMIS UTAMA & LATAR BELAKANG]</h3>
+                <p>Berlatar di dunia modern tempat gerbang dimensional misterius terbuka dan melepaskan berbagai monster berbahaya ke muka bumi. Manusia terpilih yang memiliki kekuatan supranatural untuk membasmi monster ini disebut sebagai <b>Hunter</b>.</p>
+            </div>
+
+            <div class="lore-box">
+                <h3>[KISAH SUNG JIN-WOO]</h3>
+                <p>Sung Jin-Woo adalah seorang Hunter tingkat paling bawah (<b>E-Rank</b>) yang sering dijuluki sebagai "Hunter Lemah" karena ia selalu terluka parah dan hampir mati di setiap raid demi membiayai pengobatan ibunya yang terbaring koma.</p>
+            </div>
+
+            <div class="lore-box">
+                <h3>[TITIK BALIK: THE SYSTEM]</h3>
+                <p>Saat mengikuti raid dungeon tingkat D, kelompok Jin-Woo terjebak di dalam <i>Double Dungeon</i> yang mematikan. Ketika rekan-rekannya tewas satu per satu, Jin-Woo memilih berkorban. Di ambang kematiannya, sebuah layar biru misterius muncul di hadapannya dan mengangkatnya menjadi satu-satunya <b>Player</b> di dunia yang dapat naik level tanpa batas.</p>
+            </div>
+        </div>
+
+        <!-- SECTION 5: MANHWA ARC -->
+        <div id="comic" class="section-view">
+            <div class="lore-box">
+                <h3>[INFORMASI KOMIK / MANHWA]</h3>
+                <p>Solo Leveling pertama kali dirilis sebagai web novel karya Chugong, lalu diadaptasi menjadi manhwa (komik web Korea) dengan ilustrasi legendaris oleh mendiang <b>Dubu (Redice Studio)</b>.</p>
+                <p><b>Total Chapter:</b> 179 Chapter (Tamat lengkap dalam 2 Season utama).</p>
+            </div>
+
+            <div class="lore-box">
+                <h3>[DAFTAR ARC UTAMA CERITA]</h3>
+                <p><b>1. First Awakening Arc:</b> Pengenalan dunia Hunter dan status E-Rank Sung Jin-Woo.<br>
+                <b>2. Double Dungeon Arc:</b> Kebangkitan sistem dan quest harian penambah statistik.<br>
+                <b>3. Dungeon & Prisoners Arc:</b> Petualangan awal Jin-Woo menyembunyikan kekuatan aslinya.<br>
+                <b>4. Job Change Arc:</b> Perolehan kelas Shadow Monarch dan pertempuran melawan Igris.<br>
+                <b>5. Jeju Island Arc:</b> Invasi besar-besaran ke sarang semut monster dan kemunculan Beru.<br>
+                <b>6. International & Monarchs War Arc:</b> Pertempuran akhir melawan para Monarch demi menyelamatkan bumi.</p>
+            </div>
+        </div>
+
+        <!-- SECTION 6: RANKS -->
         <div id="ranks" class="section-view">
             <div class="grid">
                 <div class="ui-card">
