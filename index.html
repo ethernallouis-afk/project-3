@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYSTEM | HOLO QUEST & SHOP INTERFACE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: #020617;
+            color: #e0f2fe;
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(0, 210, 255, 0.15) 0%, transparent 60%),
+                linear-gradient(rgba(2, 6, 23, 0.9), rgba(2, 6, 23, 0.9)),
+                url('https://images.alphacoders.com/134/1349581.png');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 1000;
+            background-size: 100% 3px, 6px 100%;
+            pointer-events: none;
+        }
+
+        /* Header UI */
+        header {
+            background: rgba(15, 23, 42, 0.75);
+            border-bottom: 2px solid #00d2ff;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(12px);
+        }
+
+        .system-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            color: #00d2ff;
+            letter-spacing: 3px;
+            text-shadow: 0 0 12px #00d2ff;
+        }
+
+        .player-status {
+            display: flex;
+            gap: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            background: rgba(0, 210, 255, 0.08);
+            border: 1px solid #00d2ff;
+            padding: 6px 12px;
+            box-shadow: inset 0 0 10px rgba(0, 210, 255, 0.2), 0 0 10px rgba(0, 210, 255, 0.2);
+            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+        }
+
+        .status-badge span { color: #38bdf8; font-weight: bold; }
+        .status-badge .gold-txt { color: #f59e0b; }
+
+        /* Hologram Panel */
+        .holo-panel {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid #00d2ff;
+            box-shadow: inset 0 0 15px rgba(0, 210, 255, 0.15), 0 0 20px rgba(0, 210, 255, 0.25);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Quest Banner */
+        .quest-hero {
+            padding: 25px 5%;
+            max-width: 1200px;
+            margin: 25px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+        }
+
+        .quest-info h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 26px;
+            color: #ef4444;
+            text-shadow: 0 0 15px #ef4444;
+            margin-bottom: 5px;
+        }
+
+        .quest-info p { color: #94a3b8; font-size: 14px; }
+
+        /* Timer Box */
+        .holo-timer-box {
+            text-align: center;
+            padding: 15px 25px;
+            min-width: 260px;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+        }
+
+        .timer-display {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            color: #38bdf8;
+            text-shadow: 0 0 15px #00d2ff;
+            margin: 5px 0;
+        }
+
+        .sys-btn {
+            background: rgba(0, 210, 255, 0.1);
+            border: 1px solid #00d2ff;
+            color: #00d2ff;
+            padding: 6px 12px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin: 2px;
+        }
+
+        .sys-btn:hover { background: #00d2ff; color: #000; box-shadow: 0 0 15px #00d2ff; }
+        .sys-btn.stop { border-color: #ef4444; color: #ef4444; }
+        .sys-btn.stop:hover { background: #ef4444; color: #fff; }
+
+        /* Navigation Tab */
+        .container { padding: 20px 5%; max-width: 1200px; margin: 0 auto; }
+        
+        .tab-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(0, 210, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 8px 16px;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            color: #00d2ff;
+            border-bottom: 2px solid #00d2ff;
+            text-shadow: 0 0 10px #00d2ff;
+        }
+
+        /* Quest & Shop Grid */
+        .view-section { display: none; }
+        .view-section.active { display: block; }
+
+        .quest-grid, .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card-box {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            padding: 18px;
+            transition: all 0.3s;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+        }
+
+        .card-box:hover {
+            border-color: #00d2ff;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .rank-badge {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 8px;
+            display: inline-block;
+            margin-bottom: 10px;
+            border: 1px solid;
+        }
+
+        .rank-e { color: #94a3b8; border-color: #94a3b8; }
+        .rank-c { color: #38bdf8; border-color: #38bdf8; }
+        .rank-a { color: #f59e0b; border-color: #f59e0b; }
+        .rank-s { color: #ef4444; border-color: #ef4444; }
+
+        .item-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .item-desc {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .item-price {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            color: #f59e0b;
+            margin-bottom: 10px;
+        }
+
+        .btn-action {
+            width: 100%;
+            background: rgba(0, 210, 255, 0.08);
+            border: 1px solid #00d2ff;
+            color: #00d2ff;
+            padding: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-action:hover {
+            background: #00d2ff;
+            color: #000;
+            box-shadow: 0 0 15px #00d2ff;
+        }
+
+        .btn-action.buy-btn {
+            border-color: #f59e0b;
+            color: #f59e0b;
+        }
+
+        .btn-action.buy-btn:hover {
+            background: #f59e0b;
+            color: #000;
+            box-shadow: 0 0 15px #f59e0b;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #475569;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            letter-spacing: 2px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="system-title">[SYSTEM HOLO-UI]</div>
+        <div class="player-status">
+            <div class="status-badge">HUNTER: <span id="player-title">WEAKEST HUNTER</span></div>
+            <div class="status-badge">LVL: <span id="player-level">1</span></div>
+            <div class="status-badge">EXP: <span id="player-exp">0</span>/100</div>
+            <div class="status-badge">FATIGUE: <span id="player-fatigue">0</span>%</div>
+            <div class="status-badge">GOLD: <span class="gold-txt" id="player-gold">0</span> G</div>
+        </div>
+    </header>
+
+    <div class="quest-hero holo-panel">
+        <div class="quest-info">
+            <h1>[SYSTEM INTERFACE]</h1>
+            <p>Selesaikan Quest untuk mendapatkan Gold dan EXP. Gunakan Gold di System Shop!</p>
+        </div>
+
+        <div class="holo-timer-box holo-panel">
+            <h3 style="font-family:'Orbitron'; font-size:11px; color:#00d2ff;">WORKOUT SESSION</h3>
+            <div class="timer-display" id="timer">00:00:00</div>
+            <button class="sys-btn" onclick="startWorkoutTimer()">START</button>
+            <button class="sys-btn stop" onclick="pauseWorkoutTimer()">PAUSE</button>
+            <button class="sys-btn" onclick="resetWorkoutTimer()">RESET</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab('quests', this)">[DAILY QUESTS]</button>
+            <button class="tab-btn" onclick="switchTab('shop', this)">[SYSTEM SHOP]</button>
+        </div>
+
+        <div id="quests" class="view-section active">
+            <div class="quest-grid">
+
+                <div class="card-box" data-id="q1">
+                    <span class="rank-badge rank-e">E-RANK</span>
+                    <div class="item-title">100 Push-Ups</div>
+                    <div class="item-desc">EXP: +25 | Fatigue: +15%<br>Reward: 50 Gold</div>
+                    <button class="btn-action" onclick="completeQuest('q1', 25, 15, 50, this)">COMPLETE QUEST</button>
+                </div>
+
+                <div class="card-box" data-id="q2">
+                    <span class="rank-badge rank-e">E-RANK</span>
+                    <div class="item-title">100 Sit-Ups</div>
+                    <div class="item-desc">EXP: +25 | Fatigue: +15%<br>Reward: 50 Gold</div>
+                    <button class="btn-action" onclick="completeQuest('q2', 25, 15, 50, this)">COMPLETE QUEST</button>
+                </div>
+
+                <div class="card-box" data-id="q3">
+                    <span class="rank-badge rank-c">C-RANK</span>
+                    <div class="item-title">100 Squats</div>
+                    <div class="item-desc">EXP: +30 | Fatigue: +20%<br>Reward: 100 Gold</div>
+                    <button class="btn-action" onclick="completeQuest('q3', 30, 20, 100, this)">COMPLETE QUEST</button>
+                </div>
+
+                <div class="card-box" data-id="q4">
+                    <span class="rank-badge rank-a">A-RANK</span>
+                    <div class="item-title">10KM Running</div>
+                    <div class="item-desc">EXP: +50 | Fatigue: +35%<br>Reward: 250 Gold</div>
+                    <button class="btn-action" onclick="completeQuest('q4', 50, 35, 250, this)">COMPLETE QUEST</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="shop" class="view-section">
+            <div class="shop-grid">
+
+                <div class="card-box">
+                    <span class="rank-badge rank-e">CONSUMABLE</span>
+                    <div class="item-title">Recovery Potion</div>
+                    <div class="item-desc">Memulihkan seluruh Fatigue (Kelelahan) menjadi 0%.</div>
+                    <div class="item-price">PRICE: 100 GOLD</div>
+                    <button class="btn-action buy-btn" onclick="buyItem('potion', 100)">PURCHASE</button>
+                </div>
+
+                <div class="card-box">
+                    <span class="rank-badge rank-c">ELIXIR</span>
+                    <div class="item-title">EXP Elixir</div>
+                    <div class="item-desc">Memberikan tambahan instan +50 EXP secara langsung.</div>
+                    <div class="item-price">PRICE: 200 GOLD</div>
+                    <button class="btn-action buy-btn" onclick="buyItem('elixir', 200)">PURCHASE</button>
+                </div>
+
+                <div class="card-box">
+                    <span class="rank-badge rank-s">KEY ITEM</span>
+                    <div class="item-title">Shadow Sovereign Key</div>
+                    <div class="item-desc">Langsung membuka Gelar [MONARCH OF SHADOWS].</div>
+                    <div class="item-price">PRICE: 1000 GOLD</div>
+                    <button class="btn-action buy-btn" onclick="buyItem('key', 1000)">PURCHASE</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <button class="sys-btn stop" onclick="resetAccountData()">RESET ALL SYSTEM DATA</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>SYSTEM NOTIFICATION: AUTOMATIC DATA PERSISTENCE ENABLED.</p>
+    </footer>
+
+    <script>
+        let accountData = {
+            level: 1,
+            exp: 0,
+            fatigue: 0,
+            gold: 0,
+            totalSecondsWorkedOut: 0,
+            completedQuests: [],
+            customTitle: null
+        };
+
+        let workoutTimerInterval = null;
+        let activeTimerSeconds = 0;
+
+        window.onload = function() {
+            loadAccountData();
+        };
+
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function getPlayerTitle(currLevel) {
+            if (accountData.customTitle) return accountData.customTitle;
+            if (currLevel >= 81) return "SHADOW SOVEREIGN";
+            if (currLevel >= 51) return "MONARCH OF SHADOWS";
+            if (currLevel >= 26) return "NECROMANCER";
+            if (currLevel >= 11) return "REAWAKENED";
+            return "WEAKEST HUNTER";
+        }
+
+        function saveAccountData() {
+            localStorage.setItem('solo_workout_shop_acc', JSON.stringify(accountData));
+        }
+
+        function loadAccountData() {
+            const saved = localStorage.getItem('solo_workout_shop_acc');
+            if (saved) {
+                accountData = JSON.parse(saved);
+            }
+            updateStatusUI();
+            restoreQuestCardsUI();
+        }
+
+        function resetAccountData() {
+            if (confirm("[SYSTEM WARNING]\nHapus seluruh data akun & Gold?")) {
+                localStorage.removeItem('solo_workout_shop_acc');
+                location.reload();
+            }
+        }
+
+        function completeQuest(questId, expReward, fatigueCost, goldReward, btn) {
+            if (!accountData.completedQuests.includes(questId)) {
+                accountData.completedQuests.push(questId);
+                accountData.exp += expReward;
+                accountData.fatigue += fatigueCost;
+                accountData.gold += goldReward;
+                
+                checkLevelUp();
+            } else {
+                accountData.completedQuests = accountData.completedQuests.filter(id => id !== questId);
+                accountData.exp -= expReward;
+                accountData.fatigue -= fatigueCost;
+                accountData.gold -= goldReward;
+                if (accountData.exp < 0) accountData.exp = 0;
+                if (accountData.fatigue < 0) accountData.fatigue = 0;
+                if (accountData.gold < 0) accountData.gold = 0;
+            }
+
+            saveAccountData();
+            updateStatusUI();
+            restoreQuestCardsUI();
+        }
+
+        function buyItem(itemType, cost) {
+            if (accountData.gold < cost) {
+                alert("[SYSTEM ERROR]\nGold tidak mencukupi untuk membeli item ini!");
+                return;
+            }
+
+            accountData.gold -= cost;
+
+            if (itemType === 'potion') {
+                accountData.fatigue = 0;
+                alert("[ITEM USED: RECOVERY POTION]\nFatigue berhasil dipulihkan menjadi 0%!");
+            } else if (itemType === 'elixir') {
+                accountData.exp += 50;
+                alert("[ITEM USED: EXP ELIXIR]\nAnda memperoleh +50 EXP!");
+                checkLevelUp();
+            } else if (itemType === 'key') {
+                accountData.customTitle = "MONARCH OF SHADOWS";
+                alert("[SPECIAL ITEM UNLOCKED]\nGelar Hunter Anda berubah menjadi MONARCH OF SHADOWS!");
+            }
+
+            saveAccountData();
+            updateStatusUI();
+        }
+
+        function checkLevelUp() {
+            if (accountData.exp >= 100) {
+                accountData.level++;
+                accountData.exp -= 100;
+                accountData.fatigue = 0;
+                alert(`[SYSTEM NOTIFICATION]\n\nLEVEL UP! Current Level: ${accountData.level}\nStats Fully Restored!`);
+            }
+        }
+
+        function updateStatusUI() {
+            document.getElementById('player-level').innerText = accountData.level;
+            document.getElementById('player-exp').innerText = accountData.exp;
+            document.getElementById('player-fatigue').innerText = accountData.fatigue;
+            document.getElementById('player-gold').innerText = accountData.gold;
+            document.getElementById('player-title').innerText = getPlayerTitle(accountData.level);
+        }
+
+        function restoreQuestCardsUI() {
+            document.querySelectorAll('.card-box[data-id]').forEach(card => {
+                const qId = card.getAttribute('data-id');
+                const btn = card.querySelector('.btn-action');
+
+                if (accountData.completedQuests.includes(qId)) {
+                    card.style.borderColor = '#22c55e';
+                    btn.innerText = '✓ QUEST CLEARED';
+                } else {
+                    card.style.borderColor = 'rgba(0, 210, 255, 0.3)';
+                    btn.innerText = 'COMPLETE QUEST';
+                }
+            });
+        }
+
+        function startWorkoutTimer() {
+            if (workoutTimerInterval) return;
+
+            workoutTimerInterval = setInterval(() => {
+                activeTimerSeconds++;
+                accountData.totalSecondsWorkedOut++;
+                
+                let hrs = Math.floor(activeTimerSeconds / 3600);
+                let mins = Math.floor((activeTimerSeconds % 3600) / 60);
+                let secs = activeTimerSeconds % 60;
+
+                hrs = hrs < 10 ? '0' + hrs : hrs;
+                mins = mins < 10 ? '0' + mins : mins;
+                secs = secs < 10 ? '0' + secs : secs;
+
+                document.getElementById('timer').innerText = `${hrs}:${mins}:${secs}`;
+                if (activeTimerSeconds % 5 === 0) saveAccountData();
+            }, 1000);
+        }
+
+        function pauseWorkoutTimer() {
+            clearInterval(workoutTimerInterval);
+            workoutTimerInterval = null;
+            saveAccountData();
+        }
+
+        function resetWorkoutTimer() {
+            pauseWorkoutTimer();
+            activeTimerSeconds = 0;
+            document.getElementById('timer').innerText = "00:00:00";
+        }
+    </script>
+</body>
+</html>
