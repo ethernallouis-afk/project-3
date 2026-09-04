@@ -3,44 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYSTEM | SOLO LEVELING PROGRESSION</title>
+    <title>[SYSTEM] - SHADOW MONARCH INTERACTIVE MANHWA UI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     
     <style>
+        :root {
+            --monarch-purple: #a855f7;
+            --shadow-violet: #7e22ce;
+            --dark-core: rgba(5, 2, 12, 0.92);
+            --border-purple: rgba(168, 85, 247, 0.6);
+            --purple-glow: rgba(168, 85, 247, 0.45);
+            --danger-red: #ff2a5f;
+            --gold-color: #ffd700;
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        
+
         body {
-            background-color: #020617;
-            color: #e0f2fe;
+            background-color: #030008;
+            color: #f3e8ff;
             font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
             overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 50% 20%, rgba(0, 210, 255, 0.15) 0%, transparent 60%),
-                linear-gradient(rgba(2, 6, 23, 0.9), rgba(2, 6, 23, 0.9)),
+                radial-gradient(circle at 50% 30%, rgba(126, 34, 206, 0.35) 0%, transparent 70%),
+                linear-gradient(rgba(3, 0, 8, 0.88), rgba(3, 0, 8, 0.96)),
                 url('https://images.alphacoders.com/134/1349581.png');
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
         }
 
-        body::before {
-            content: " ";
-            display: block;
+        body::after {
+            content: "";
             position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-            z-index: 1000;
-            background-size: 100% 3px, 6px 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(168, 85, 247, 0.04) 50%);
+            background-size: 100% 4px;
             pointer-events: none;
+            z-index: 999;
         }
 
-        /* Holographic Overlay / Login Screen */
+        /* SYSTEM WINDOW STYLES */
+        .system-window {
+            background: var(--dark-core);
+            border: 2px solid var(--monarch-purple);
+            box-shadow: 0 0 25px var(--purple-glow), inset 0 0 20px rgba(168, 85, 247, 0.15);
+            backdrop-filter: blur(16px);
+            position: relative;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+            animation: shadowPulse 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
+        }
+
+        @keyframes shadowPulse {
+            0% { opacity: 0; transform: scale(0.92); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .system-window::before {
+            content: "";
+            position: absolute;
+            top: -2px; left: 30px; right: 30px; height: 2px;
+            background: var(--monarch-purple);
+            box-shadow: 0 0 12px var(--monarch-purple);
+        }
+
+        /* PROLOGUE OVERLAY */
         #login-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 6, 23, 0.95);
+            background: rgba(3, 0, 8, 0.96);
             z-index: 2000;
             display: flex;
             justify-content: center;
@@ -48,91 +83,83 @@
             padding: 20px;
         }
 
-        .login-box {
-            background: rgba(15, 23, 42, 0.9);
-            border: 2px solid #ef4444;
-            box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
-            padding: 30px;
+        .login-card {
             max-width: 500px;
             width: 100%;
+            padding: 35px;
             text-align: center;
-            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+            border-color: var(--danger-red);
+            box-shadow: 0 0 35px rgba(255, 42, 95, 0.45);
         }
 
-        .login-box h2 {
+        .login-card h2 {
             font-family: 'Orbitron', sans-serif;
-            color: #ef4444;
-            font-size: 22px;
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px #ef4444;
-        }
-
-        .login-box p {
-            color: #94a3b8;
-            font-size: 14px;
-            line-height: 1.6;
+            color: var(--danger-red);
+            font-size: 24px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px var(--danger-red);
             margin-bottom: 20px;
         }
 
-        /* Main Header UI */
+        .login-card p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #d8b4fe;
+            margin-bottom: 25px;
+        }
+
+        /* HEADER UI */
         header {
-            background: rgba(15, 23, 42, 0.75);
-            border-bottom: 2px solid #00d2ff;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
             padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky; top: 0; z-index: 100;
-            backdrop-filter: blur(12px);
+            background: rgba(3, 0, 8, 0.92);
+            border-bottom: 2px solid var(--monarch-purple);
+            box-shadow: 0 0 20px var(--purple-glow);
         }
 
-        .system-title {
+        .system-logo {
             font-family: 'Orbitron', sans-serif;
-            font-size: 18px;
-            color: #00d2ff;
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--monarch-purple);
             letter-spacing: 2px;
-            text-shadow: 0 0 12px #00d2ff;
+            text-shadow: 0 0 12px var(--monarch-purple);
         }
 
-        .player-status {
+        .status-bar-group {
             display: flex;
-            gap: 10px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 11px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
-        .status-badge {
-            background: rgba(0, 210, 255, 0.08);
-            border: 1px solid #00d2ff;
-            padding: 6px 12px;
-            box-shadow: inset 0 0 10px rgba(0, 210, 255, 0.2);
-            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+        .status-chip {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid var(--monarch-purple);
+            padding: 6px 14px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            color: #fff;
+            text-shadow: 0 0 8px var(--monarch-purple);
         }
 
-        .status-badge span { color: #38bdf8; font-weight: bold; }
-        .status-badge .gold-txt { color: #f59e0b; }
+        .status-chip span { color: var(--monarch-purple); font-weight: bold; }
+        .status-chip .gold { color: var(--gold-color); }
 
-        /* Container Layout */
-        .container { padding: 20px 5%; max-width: 1200px; margin: 0 auto; }
-
-        .holo-panel {
-            background: rgba(15, 23, 42, 0.75);
-            border: 1px solid #00d2ff;
-            box-shadow: inset 0 0 15px rgba(0, 210, 255, 0.15), 0 0 20px rgba(0, 210, 255, 0.25);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            margin-bottom: 25px;
-            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
         }
 
-        /* Navigation Tabs */
-        .tab-bar {
+        /* TABS */
+        .tab-menu {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 25px;
-            border-bottom: 1px solid rgba(0, 210, 255, 0.3);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.3);
             padding-bottom: 10px;
             flex-wrap: wrap;
         }
@@ -140,261 +167,524 @@
         .tab-btn {
             background: transparent;
             border: none;
-            color: #64748b;
+            color: #94a3b8;
             font-family: 'Orbitron', sans-serif;
-            font-size: 13px;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 10px 18px;
             cursor: pointer;
-            padding: 8px 16px;
             transition: 0.3s;
+            letter-spacing: 1px;
         }
 
-        .tab-btn.active {
-            color: #00d2ff;
-            border-bottom: 2px solid #00d2ff;
-            text-shadow: 0 0 10px #00d2ff;
+        .tab-btn.active, .tab-btn:hover {
+            color: var(--monarch-purple);
+            text-shadow: 0 0 15px var(--monarch-purple);
+            border-bottom: 3px solid var(--monarch-purple);
         }
 
-        .view-section { display: none; }
-        .view-section.active { display: block; }
+        .section-view { display: none; }
+        .section-view.active { display: block; }
 
-        /* Grid Cards */
-        .quest-grid, .shop-grid, .char-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
+        /* MANHWA COMIC PLOT PANEL */
+        .comic-panel-box {
+            background: linear-gradient(135deg, rgba(20, 10, 35, 0.95), rgba(5, 2, 12, 0.95));
+            border: 2px dashed var(--monarch-purple);
+            padding: 25px;
+            margin-bottom: 25px;
+            position: relative;
         }
 
-        .card-box {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(0, 210, 255, 0.3);
-            padding: 18px;
-            transition: all 0.3s;
-            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card-box:hover {
-            border-color: #00d2ff;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
-            transform: translateY(-3px);
-        }
-
-        .rank-badge {
+        .comic-badge {
+            display: inline-block;
+            background: var(--monarch-purple);
+            color: #000;
             font-family: 'Orbitron', sans-serif;
             font-size: 10px;
-            font-weight: bold;
-            padding: 2px 8px;
-            display: inline-block;
-            margin-bottom: 10px;
-            border: 1px solid;
-            width: fit-content;
+            font-weight: 900;
+            padding: 4px 10px;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
         }
 
-        .rank-e { color: #94a3b8; border-color: #94a3b8; }
-        .rank-c { color: #38bdf8; border-color: #38bdf8; }
-        .rank-a { color: #f59e0b; border-color: #f59e0b; }
-        .rank-s { color: #ef4444; border-color: #ef4444; }
+        .comic-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #e9d5ff;
+            margin-bottom: 15px;
+            font-style: italic;
+            border-left: 3px solid var(--monarch-purple);
+            padding-left: 12px;
+        }
 
-        .item-title { font-family: 'Orbitron', sans-serif; font-size: 16px; color: #fff; margin-bottom: 8px; }
-        .item-desc { font-size: 12px; color: #94a3b8; margin-bottom: 15px; line-height: 1.4; }
+        /* GRID LAYOUT */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 22px;
+        }
 
-        .btn-action {
-            width: 100%;
-            background: rgba(0, 210, 255, 0.08);
-            border: 1px solid #00d2ff;
-            color: #00d2ff;
-            padding: 10px;
+        .category-header {
             font-family: 'Orbitron', sans-serif;
-            font-size: 11px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
+            font-size: 18px;
+            color: var(--monarch-purple);
+            text-shadow: 0 0 10px var(--monarch-purple);
+            margin: 30px 0 15px 0;
+            border-left: 4px solid var(--monarch-purple);
+            padding-left: 12px;
         }
 
-        .btn-action:hover {
-            background: #00d2ff;
-            color: #000;
-            box-shadow: 0 0 15px #00d2ff;
+        .card-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            color: #fff;
+            margin-top: 10px;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: #c084fc;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        /* CHARACTER ROSTER CARD STYLES */
+        .char-card {
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .char-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 35px var(--monarch-purple);
+        }
+
+        .char-img-wrap {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            border-bottom: 1px solid var(--monarch-purple);
+        }
+
+        .char-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .char-card:hover .char-img-wrap img {
+            transform: scale(1.08);
+        }
+
+        .char-badge {
+            position: absolute;
+            top: 10px; left: 10px;
+            background: rgba(3, 0, 8, 0.9);
+            border: 1px solid var(--monarch-purple);
+            color: var(--monarch-purple);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            padding: 3px 8px;
+            font-weight: bold;
+            box-shadow: 0 0 10px var(--purple-glow);
         }
 
         .sys-btn {
-            background: rgba(0, 210, 255, 0.1);
-            border: 1px solid #00d2ff;
-            color: #00d2ff;
-            padding: 10px 20px;
+            width: 100%;
+            background: rgba(168, 85, 247, 0.12);
+            border: 1px solid var(--monarch-purple);
+            color: var(--monarch-purple);
+            padding: 12px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 11px;
+            font-size: 12px;
+            font-weight: 800;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.3s;
+            letter-spacing: 1px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
         }
 
-        .sys-btn:hover { background: #00d2ff; color: #000; box-shadow: 0 0 15px #00d2ff; }
-        .sys-btn.stop { border-color: #ef4444; color: #ef4444; }
-        .sys-btn.stop:hover { background: #ef4444; color: #fff; }
+        .sys-btn:hover {
+            background: var(--monarch-purple);
+            color: #000;
+            box-shadow: 0 0 25px var(--monarch-purple);
+        }
+
+        .sys-btn.danger {
+            border-color: var(--danger-red);
+            color: var(--danger-red);
+            background: rgba(255, 42, 95, 0.1);
+        }
+
+        .sys-btn.danger:hover {
+            background: var(--danger-red);
+            color: #fff;
+            box-shadow: 0 0 25px var(--danger-red);
+        }
     </style>
 </head>
 <body>
 
-    <!-- 1. LOGIN / PROLOGUE OVERLAY (KELEMAHAN AWAL) -->
     <div id="login-overlay">
-        <div class="login-box">
-            <h2>[SYSTEM NOTIFICATION]</h2>
-            <p><strong>STATUS: WEAKEST HUMAN</strong><br>
-            Fisikmu sangat lemah. Kamu bahkan tidak mampu menyelesaikan 1 Push-Up atau Lari 1KM tanpa kehabisan napas.</p>
-            <p>Apakah kamu siap menerima tuntutan Sistem dan bangkit dari kelemahan ini?</p>
-            <button class="sys-btn" onclick="acceptAwakening()">[ACCEPT AWAKENING]</button>
+        <div class="system-window login-card">
+            <h2>[NOTIFICATION]</h2>
+            <p><strong>CURRENT STATUS: WEAKEST HUNTER</strong><br>
+            Fisikmu sangat lemah dan tidak mampu melakukan gerakan dasar seperti Push-Up. Apakah kamu siap menerima kekuatan <i>Shadow Monarch</i>?</p>
+            <button class="sys-btn" onclick="acceptAwakening()">[ACCEPT SHADOW SYSTEM]</button>
         </div>
     </div>
 
-    <!-- 2. HEADER STATUS SYSTEM -->
     <header>
-        <div class="system-title">[SYSTEM HOLO-INTERFACE]</div>
-        <div class="player-status">
-            <div class="status-badge">RANK: <span id="player-rank">E-RANK</span></div>
-            <div class="status-badge">TITLE: <span id="player-title">WEAKEST HUNTER</span></div>
-            <div class="status-badge">LVL: <span id="player-level">1</span></div>
-            <div class="status-badge">EXP: <span id="player-exp">0</span>/100</div>
-            <div class="status-badge">GOLD: <span class="gold-txt" id="player-gold">0</span> G</div>
+        <div class="system-logo">[SYSTEM STATUS]</div>
+        <div class="status-bar-group">
+            <div class="status-chip">RANK: <span id="player-rank">E-RANK</span></div>
+            <div class="status-chip">TITLE: <span id="player-title">WEAKEST HUNTER</span></div>
+            <div class="status-chip">LVL: <span id="player-level">1</span></div>
+            <div class="status-chip">EXP: <span id="player-exp">0</span>/100</div>
+            <div class="status-chip">GOLD: <span class="gold" id="player-gold">0</span> G</div>
         </div>
     </header>
 
     <div class="container">
 
-        <!-- 3. MAIN NAVIGATION -->
-        <div class="tab-bar">
-            <button class="tab-btn active" onclick="switchTab('calisthenics', this)">[CALISTHENICS WORKOUT]</button>
-            <button class="tab-btn" onclick="switchTab('gym', this)">[GYM EQUIPMENT]</button>
-            <button class="tab-btn" onclick="switchTab('shop', this)">[SYSTEM SHOP]</button>
-            <button class="tab-btn" onclick="switchTab('ranks', this)">[HUNTER RANKS]</button>
+        <div class="tab-menu">
+            <button class="tab-btn active" onclick="switchTab('calisthenics', this)">[CALISTHENICS ARC]</button>
+            <button class="tab-btn" onclick="switchTab('gym', this)">[GYM DUNGEON ARC]</button>
+            <button class="tab-btn" onclick="switchTab('characters', this)">[CHARACTER ARCHIVE]</button>
+            <button class="tab-btn" onclick="switchTab('ranks', this)">[RANK SYSTEM]</button>
         </div>
 
-        <!-- SECTION 1: CALISTHENICS (BODYWEIGHT WORKOUT) -->
-        <div id="calisthenics" class="view-section active">
-            <div class="holo-panel">
-                <h2 style="font-family:'Orbitron'; color:#00d2ff; font-size:16px;">CALISTHENICS TRAINING (LATIHAN BEBAN TUBUH)</h2>
-                <p style="color:#94a3b8; font-size:12px; margin-top:5px;">Latihan tanpa alat untuk membangun fondasi kekuatan awal Hunter.</p>
+        <div id="calisthenics" class="section-view active">
+            
+            <div class="system-window comic-panel-box">
+                <span class="comic-badge">MANHWA PANEL ARC 1: THE WEAKEST & DAILY QUEST</span>
+                <div class="comic-text">
+                    "Terkapar di lantai rumah sakit setelah nyaris tewas di Double Dungeon, layar hologram ungu darah muncul secara misterius. 'Daily Quest' dimulai. Tanpa pilihan, kamu harus melampaui batas fisik manusia biasa."
+                </div>
             </div>
 
-            <div class="quest-grid">
-                <div class="card-box" data-id="c1">
-                    <span class="rank-badge rank-e">E-RANK</span>
-                    <div class="item-title">Knee Push-Ups (Pemula)</div>
-                    <div class="item-desc">EXP: +20 | Reward: 30 Gold<br>Push-up dengan lutut di lantai bagi yang belum bisa push-up biasa.</div>
-                    <button class="btn-action" onclick="completeQuest('c1', 20, 30)">COMPLETE QUEST</button>
+            <div class="system-window" style="padding: 20px; margin-bottom: 25px;">
+                <h3 style="font-family:'Orbitron'; color:var(--monarch-purple);">[CALISTHENICS QUESTS]</h3>
+                <p style="color:#d8b4fe; font-size:13px; margin-top:5px;">Selesaikan latihan harian untuk menaikkan level dan merubah takdirmu.</p>
+            </div>
+
+            <div class="grid-layout">
+                <div class="system-window" style="padding: 20px;" data-id="c1">
+                    <div class="card-title">Knee Push-Ups (Pemula)</div>
+                    <div class="card-desc">EXP: +20 | Reward: 30 Gold<br>Latihan awal membongkar batas otot dada yang lemah.</div>
+                    <button class="sys-btn" onclick="completeQuest('c1', 20, 30)">COMPLETE QUEST</button>
                 </div>
 
-                <div class="card-box" data-id="c2">
-                    <span class="rank-badge rank-e">E-RANK</span>
-                    <div class="item-title">100 Sit-Ups</div>
-                    <div class="item-desc">EXP: +25 | Reward: 50 Gold<br>Melatih otot core dan perut.</div>
-                    <button class="btn-action" onclick="completeQuest('c2', 25, 50)">COMPLETE QUEST</button>
+                <div class="system-window" style="padding: 20px;" data-id="c2">
+                    <div class="card-title">100 Sit-Ups</div>
+                    <div class="card-desc">EXP: +25 | Reward: 50 Gold<br>Latihan rutin penguatan otot inti (*core*) tubuh Hunter.</div>
+                    <button class="sys-btn" onclick="completeQuest('c2', 25, 50)">COMPLETE QUEST</button>
                 </div>
 
-                <div class="card-box" data-id="c3">
-                    <span class="rank-badge rank-c">C-RANK</span>
-                    <div class="item-title">Standard Push-Ups</div>
-                    <div class="item-desc">EXP: +35 | Reward: 80 Gold<br>Push-up sempurna dengan postur lurus.</div>
-                    <button class="btn-action" onclick="completeQuest('c3', 35, 80)">COMPLETE QUEST</button>
-                </div>
-
-                <div class="card-box" data-id="c4">
-                    <span class="rank-badge rank-a">A-RANK</span>
-                    <div class="item-title">Pull-Ups & Dip Training</div>
-                    <div class="item-desc">EXP: +50 | Reward: 150 Gold<br>Latihan tingkat lanjut untuk kekuatan tubuh atas.</div>
-                    <button class="btn-action" onclick="completeQuest('c4', 50, 150)">COMPLETE QUEST</button>
+                <div class="system-window" style="padding: 20px;" data-id="c3">
+                    <div class="card-title">Standard Push-Ups</div>
+                    <div class="card-desc">EXP: +35 | Reward: 80 Gold<br>Push-up sempurna tubuh lurus tanpa kompromi.</div>
+                    <button class="sys-btn" onclick="completeQuest('c3', 35, 80)">COMPLETE QUEST</button>
                 </div>
             </div>
         </div>
 
-        <!-- SECTION 2: GYM EQUIPMENT WORKOUT -->
-        <div id="gym" class="view-section">
-            <div class="holo-panel">
-                <h2 style="font-family:'Orbitron'; color:#00d2ff; font-size:16px;">GYM EQUIPMENT TRAINING (LATIHAN BEBAN GYM)</h2>
-                <p style="color:#94a3b8; font-size:12px; margin-top:5px;">Menggunakan alat gym berat untuk meningkatkan atribut kekuatan secara drastis.</p>
-            </div>
-
-            <div class="quest-grid">
-                <div class="card-box" data-id="g1">
-                    <span class="rank-badge rank-c">C-RANK</span>
-                    <div class="item-title">Dumbbell Bicep Curls</div>
-                    <div class="item-desc">EXP: +30 | Reward: 70 Gold<br>Latihan isolasi otot bisep menggunakan beban tambahan.</div>
-                    <button class="btn-action" onclick="completeQuest('g1', 30, 70)">COMPLETE QUEST</button>
-                </div>
-
-                <div class="card-box" data-id="g2">
-                    <span class="rank-badge rank-a">A-RANK</span>
-                    <div class="item-title">Bench Press (Barbell)</div>
-                    <div class="item-desc">EXP: +45 | Reward: 120 Gold<br>Meningkatkan daya dorong dan ketebalan otot dada.</div>
-                    <button class="btn-action" onclick="completeQuest('g2', 45, 120)">COMPLETE QUEST</button>
-                </div>
-
-                <div class="card-box" data-id="g3">
-                    <span class="rank-badge rank-s">S-RANK</span>
-                    <div class="item-title">Heavy Barbell Deadlift</div>
-                    <div class="item-desc">EXP: +60 | Reward: 200 Gold<br>Latihan fisik ekstrem seluruh tubuh untuk Hunter terkuat.</div>
-                    <button class="btn-action" onclick="completeQuest('g3', 60, 200)">COMPLETE QUEST</button>
+        <div id="gym" class="section-view">
+            
+            <div class="system-window comic-panel-box">
+                <span class="comic-badge">MANHWA PANEL ARC 2: GYM DUNGEON PROGRESSION</span>
+                <div class="comic-text">
+                    "Ketika level meningkat, latihan beban tubuh saja tidak cukup. System membawamu ke ruang latihan khusus beban berat. Setiap besi yang diangkat mengubah aliran mana di tubuhmu menjadi energi keunguan yang pekat."
                 </div>
             </div>
-        </div>
 
-        <!-- SECTION 3: SYSTEM SHOP -->
-        <div id="shop" class="view-section">
-            <div class="shop-grid">
-                <div class="card-box">
-                    <span class="rank-badge rank-e">CONSUMABLE</span>
-                    <div class="item-title">Recovery Potion</div>
-                    <div class="item-desc">Memulihkan stamina dan energi tubuh secara instan.</div>
-                    <button class="btn-action" onclick="buyItem('potion', 100)">BUY (100 GOLD)</button>
+            <div class="system-window" style="padding: 20px; margin-bottom: 25px;">
+                <h3 style="font-family:'Orbitron'; color:var(--monarch-purple);">[GYM EQUIPMENT QUESTS]</h3>
+                <p style="color:#d8b4fe; font-size:13px; margin-top:5px;">Gunakan alat beban berat untuk melipatgandakan statistik fisikmu.</p>
+            </div>
+
+            <div class="grid-layout">
+                <div class="system-window" style="padding: 20px;" data-id="g1">
+                    <div class="card-title">Dumbbell Bicep Curls</div>
+                    <div class="card-desc">EXP: +30 | Reward: 70 Gold<br>Isolasi lengan atas dengan beban dumbbell maksimal.</div>
+                    <button class="sys-btn" onclick="completeQuest('g1', 30, 70)">COMPLETE QUEST</button>
                 </div>
 
-                <div class="card-box">
-                    <span class="rank-badge rank-c">ELIXIR</span>
-                    <div class="item-title">EXP Elixir</div>
-                    <div class="item-desc">Memberikan tambahan instan +50 EXP secara langsung.</div>
-                    <button class="btn-action" onclick="buyItem('elixir', 200)">BUY (200 GOLD)</button>
+                <div class="system-window" style="padding: 20px;" data-id="g2">
+                    <div class="card-title">Barbell Bench Press</div>
+                    <div class="card-desc">EXP: +45 | Reward: 120 Gold<br>Mendorong kekuatan daya dorong dada ke tingkat lanjut.</div>
+                    <button class="sys-btn" onclick="completeQuest('g2', 45, 120)">COMPLETE QUEST</button>
+                </div>
+
+                <div class="system-window" style="padding: 20px;" data-id="g3">
+                    <div class="card-title">Heavy Deadlift</div>
+                    <div class="card-desc">EXP: +60 | Reward: 200 Gold<br>Ujian terberat untuk mengangkat statistik seluruh tubuh secara drastis.</div>
+                    <button class="sys-btn" onclick="completeQuest('g3', 60, 200)">COMPLETE QUEST</button>
                 </div>
             </div>
         </div>
 
-        <!-- SECTION 4: HUNTER RANKS PROGRESSION -->
-        <div id="ranks" class="view-section">
-            <div class="holo-panel">
-                <h2 style="font-family:'Orbitron'; color:#00d2ff; font-size:16px;">HUNTER RANKING SYSTEM</h2>
-                <p style="color:#94a3b8; font-size:12px; margin-top:5px;">Peringkat Hunter kamu akan naik secara otomatis berdasarkan Level yang dicapai.</p>
+        <div id="characters" class="section-view">
+            
+            <div class="system-window comic-panel-box">
+                <span class="comic-badge">MANHWA PANEL ARC 3: SHADOW EXTRACTION & ALLIES</span>
+                <div class="comic-text">
+                    "Di tengah medan perang, jasad musuh dan ksatria terkuat berlutut di hadapanmu. Matamu bersinar terang memancarkan aura ungu pekat, lalu tanganmu terangkat ke udara sambil berteriak: **'ARISE!'**"
+                </div>
             </div>
 
-            <div class="quest-grid">
-                <div class="card-box">
-                    <span class="rank-badge rank-e">E-RANK</span>
-                    <div class="item-title">E-Rank Hunter</div>
-                    <div class="item-desc">Persyaratan: Level 1 - 10<br>Status: Weakest Hunter. Memulai petualangan dari titik terendah.</div>
+            <div class="category-header">1. MAIN CHARACTER & ALLIES</div>
+            <div class="grid-layout">
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">S-RANK / SHADOW MONARCH</span>
+                        <img src="https://images.alphacoders.com/134/1349581.png" alt="Sung Jin-Woo">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Sung Jin-Woo</div>
+                        <div class="card-desc">Hunter E-Rank terlemah yang bangkit menjadi Shadow Monarch dan penguasa tertinggi pasukan bayangan.</div>
+                    </div>
                 </div>
 
-                <div class="card-box">
-                    <span class="rank-badge rank-c">C-RANK</span>
-                    <div class="item-title">C-Rank Hunter</div>
-                    <div class="item-desc">Persyaratan: Level 11 - 25<br>Status: Reawakened. Tubuh mulai mampu melakukan gerakan kompleks.</div>
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">D-RANK / VICE GUILD MASTER</span>
+                        <img src="https://images.alphacoders.com/134/1349581.png" alt="Yoo Jin-Ho">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Yoo Jin-Ho</div>
+                        <div class="card-desc">Hunter Rank-D yang setia mendampingi Jin-Woo dan menjadi Wakil Master di Ahjin Guild.</div>
+                    </div>
                 </div>
 
-                <div class="card-box">
-                    <span class="rank-badge rank-a">A-RANK</span>
-                    <div class="item-title">A-Rank Hunter</div>
-                    <div class="item-desc">Persyaratan: Level 26 - 50<br>Status: High Hunter. Kekuatan fisik dan ketahanan jauh di atas rata-rata manusia.</div>
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">S-RANK / ASSOCIATION CHAIRMAN</span>
+                        <img src="https://images.alphacoders.com/134/1349581.png" alt="Go Gun-Hee">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Go Gun-Hee</div>
+                        <div class="card-desc">Ketua Asosiasi Hunter Korea. S-Rank veteran yang bertindak sebagai mentor terpercaya.</div>
+                    </div>
                 </div>
 
-                <div class="card-box">
-                    <span class="rank-badge rank-s">S-RANK</span>
-                    <div class="item-title">S-Rank / Shadow Monarch</div>
-                    <div class="item-desc">Persyaratan: Level 51+<br>Status: Monarch. Puncak kekuatan fisik tanpa batas.</div>
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">A-RANK / INSPECTION TEAM CHIEF</span>
+                        <img src="https://images.alphacoders.com/134/1349581.png" alt="Woo Jin-Chul">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Woo Jin-Chul</div>
+                        <div class="card-desc">Kepala Tim Inspeksi Asosiasi Hunter yang sangat berdedikasi dan terpercaya.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-header">2. S-RANK & NATIONAL LEVEL HUNTERS</div>
+            <div class="grid-layout">
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">S-RANK HUNTER</span>
+                        <img src="https://images2.alphacoders.com/134/1349583.png" alt="Cha Hae-In">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Cha Hae-In</div>
+                        <div class="card-desc">Wakil Master Hunters Guild, ahli pedang tangguh dengan penciuman Mana yang peka.</div>
+                    </div>
+                </div>
+
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">S-RANK / FIRE MAGE</span>
+                        <img src="https://images.alphacoders.com/135/1352106.jpeg" alt="Choi Jong-In">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Choi Jong-In</div>
+                        <div class="card-desc">Master dari Hunters Guild, Mage S-Rank pengguna sihir api paling destruktif.</div>
+                    </div>
+                </div>
+
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">S-RANK / BEAST TRANSFORMER</span>
+                        <img src="https://images.alphacoders.com/135/1352105.png" alt="Baek Yoon-Ho">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Baek Yoon-Ho</div>
+                        <div class="card-desc">Master dari White Tiger Guild dengan kemampuan bertransformasi menjadi manusia harimau.</div>
+                    </div>
+                </div>
+
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">NATIONAL HUNTER (USA)</span>
+                        <img src="https://images.alphacoders.com/135/1352104.jpeg" alt="Thomas Andre">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Thomas Andre</div>
+                        <div class="card-desc">Hunter Tingkat Nasional nomor 1 dari Amerika Serikat berjuluk "Goliath" dengan pertahanan absolut.</div>
+                    </div>
+                </div>
+
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">NATIONAL HUNTER (CHINA)</span>
+                        <img src="https://images.alphacoders.com/135/1352104.jpeg" alt="Liu Zhigang">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Liu Zhigang</div>
+                        <div class="card-desc">Hunter Tingkat Nasional terkuat asal Tiongkok dengan kemampuan bertarung pedang ganda.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-header">3. SHADOW ARMY (PASUKAN BAYANGAN)</div>
+            <div class="grid-layout">
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">SHADOW MARSHAL</span>
+                        <img src="https://images.alphacoders.com/135/1351120.png" alt="Beru">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Beru (Ant King)</div>
+                        <div class="card-desc">Bayangan Raja Semut Pulau Jeju, sangat loyal dan menguasai sihir penyembuh serta tempur udara.</div>
+                    </div>
+                </div>
+
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">SHADOW COMMANDER</span>
+                        <img src="https://images3.alphacoders.com/134/1349582.jpeg" alt="Igris">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Blood-Red Igris</div>
+                        <div class="card-desc">Ksatria bayangan utama berbaju zirah merah yang merupakan garda pelindung terpercaya Jin-Woo.</div>
+                    </div>
+                </div>
+
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">GRAND MARSHAL</span>
+                        <img src="https://images3.alphacoders.com/134/1349582.jpeg" alt="Bellion">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Bellion</div>
+                        <div class="card-desc">Panglima tertinggi (*Grand Marshal*) dari seluruh pasukan bayangan, mantan pengawal Ashborn.</div>
+                    </div>
+                </div>
+
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">SHADOW SPELLCASTER</span>
+                        <img src="https://images.alphacoders.com/134/1349581.png" alt="Tusk">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Tusk</div>
+                        <div class="card-desc">Bayangan High Orc Shaman (Kargalgan) dengan sihir manipulasi ukuran tubuh dan api liar.</div>
+                    </div>
+                </div>
+
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">SHADOW TANKER</span>
+                        <img src="https://images.alphacoders.com/134/1349581.png" alt="Iron">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Iron</div>
+                        <div class="card-desc">Bayangan ksatria bertubuh raksasa dengan perisai besar sebagai pemicu Provokasi (*Taunt*).</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-header">4. MONARCHS & ANTAGONISTS</div>
+            <div class="grid-layout">
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">ORIGINAL SHADOW MONARCH</span>
+                        <img src="https://images.alphacoders.com/134/1349581.png" alt="Ashborn">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Ashborn</div>
+                        <div class="card-desc">Raja para Bayangan terdahulu yang mewariskan inti kekuatannya kepada Sung Jin-Woo.</div>
+                    </div>
+                </div>
+
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">MONARCH OF DESTRUCTION</span>
+                        <img src="https://images.alphacoders.com/135/1353011.png" alt="Antares">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Antares</div>
+                        <div class="card-desc">Raja para Naga dan Monarch terkuat yang menjadi ancaman pemusnah terbesar bumi.</div>
+                    </div>
+                </div>
+
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">BEAST MONARCH</span>
+                        <img src="https://images.alphacoders.com/135/1352105.png" alt="Rakan">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Rakan (Beast Monarch)</div>
+                        <div class="card-desc">Raja Binatang Buas yang bertarung menggunakan insting liar dan kecepatan fisik alami.</div>
+                    </div>
+                </div>
+
+                <div class="system-window char-card">
+                    <div class="char-img-wrap">
+                        <span class="char-badge">MONARCH OF WHITE FLAMES</span>
+                        <img src="https://images.alphacoders.com/135/1352106.jpeg" alt="Baran">
+                    </div>
+                    <div style="padding: 18px;">
+                        <div class="card-title">Baran (Demon King)</div>
+                        <div class="card-desc">Raja Demon penguasa api putih yang dihadapi Jin-Woo di dalam *Demon Castle*.</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="ranks" class="section-view">
+            
+            <div class="system-window comic-panel-box">
+                <span class="comic-badge">MANHWA PANEL CLIMAX: SHADOW SOVEREIGN WAR</span>
+                <div class="comic-text">
+                    "Langit berubah menjadi keunguan gelap. Jutaan pasukan bayangan berdiri di belakangmu menghadapi pasukan naga Monarch. Buktikan kekuatanmu hingga mencapai level puncak S-Rank / Shadow Monarch!"
+                </div>
+            </div>
+
+            <div class="grid-layout">
+                <div class="system-window" style="padding: 20px;">
+                    <div class="card-title" style="color:#94a3b8;">E-RANK HUNTER</div>
+                    <div class="card-desc">Syarat: Level 1 - 10<br>Status: Weakest Hunter. Memulai peningkatan kekuatan fisik dari titik terendah.</div>
+                </div>
+
+                <div class="system-window" style="padding: 20px;">
+                    <div class="card-title" style="color:var(--monarch-purple);">C-RANK HUNTER</div>
+                    <div class="card-desc">Syarat: Level 11 - 25<br>Status: Reawakened. Ketahanan fisik dan energi mana meningkat signifikan.</div>
+                </div>
+
+                <div class="system-window" style="padding: 20px;">
+                    <div class="card-title" style="color:var(--gold-color);">A-RANK HUNTER</div>
+                    <div class="card-desc">Syarat: Level 26 - 50<br>Status: High Hunter. Mampu menghadapi tantangan fisik berat tanpa kesulitan.</div>
+                </div>
+
+                <div class="system-window" style="padding: 20px;">
+                    <div class="card-title" style="color:var(--danger-red);">S-RANK / SHADOW MONARCH</div>
+                    <div class="card-desc">Syarat: Level 51+<br>Status: Monarch. Puncak kekuatan fisik tanpa batas.</div>
                 </div>
             </div>
         </div>
 
         <div style="text-align: center; margin-top: 40px;">
-            <button class="sys-btn stop" onclick="resetAccountData()">RESET SYSTEM PROGRESSION</button>
+            <button class="sys-btn danger" style="max-width: 300px;" onclick="resetAccountData()">RESET ALL SYSTEM DATA</button>
         </div>
+
     </div>
 
     <script>
@@ -415,7 +705,7 @@
 
         function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
             btn.classList.add('active');
             document.getElementById(tabId).classList.add('active');
         }
@@ -428,11 +718,11 @@
         }
 
         function saveAccountData() {
-            localStorage.setItem('solo_workout_progression', JSON.stringify(accountData));
+            localStorage.setItem('solo_purple_comic_data', JSON.stringify(accountData));
         }
 
         function loadAccountData() {
-            const saved = localStorage.getItem('solo_workout_progression');
+            const saved = localStorage.getItem('solo_purple_comic_data');
             if (saved) {
                 accountData = JSON.parse(saved);
                 document.getElementById('login-overlay').style.display = 'none';
@@ -442,8 +732,8 @@
         }
 
         function resetAccountData() {
-            if (confirm("[SYSTEM WARNING]\nHapus seluruh progress Hunter?")) {
-                localStorage.removeItem('solo_workout_progression');
+            if (confirm("[SYSTEM WARNING]\nApakah Anda yakin ingin mengulang seluruh progress System?")) {
+                localStorage.removeItem('solo_purple_comic_data');
                 location.reload();
             }
         }
@@ -467,31 +757,11 @@
             restoreQuestCardsUI();
         }
 
-        function buyItem(itemType, cost) {
-            if (accountData.gold < cost) {
-                alert("[SYSTEM ERROR]\nGold tidak mencukupi!");
-                return;
-            }
-
-            accountData.gold -= cost;
-
-            if (itemType === 'potion') {
-                alert("[ITEM USED: RECOVERY POTION]\nStamina berhasil dipulihkan!");
-            } else if (itemType === 'elixir') {
-                accountData.exp += 50;
-                alert("[ITEM USED: EXP ELIXIR]\nAnda memperoleh +50 EXP!");
-                checkLevelUp();
-            }
-
-            saveAccountData();
-            updateStatusUI();
-        }
-
         function checkLevelUp() {
             if (accountData.exp >= 100) {
                 accountData.level++;
                 accountData.exp -= 100;
-                alert(`[SYSTEM NOTIFICATION]\n\nLEVEL UP! Current Level: ${accountData.level}`);
+                alert(`[SYSTEM NOTIFICATION]\n\nLEVEL UP!\nCurrent Level: ${accountData.level}`);
             }
         }
 
@@ -505,15 +775,15 @@
         }
 
         function restoreQuestCardsUI() {
-            document.querySelectorAll('.card-box[data-id]').forEach(card => {
+            document.querySelectorAll('.system-window[data-id]').forEach(card => {
                 const qId = card.getAttribute('data-id');
-                const btn = card.querySelector('.btn-action');
+                const btn = card.querySelector('.sys-btn');
 
                 if (accountData.completedQuests.includes(qId)) {
                     card.style.borderColor = '#22c55e';
-                    btn.innerText = '✓ CLEARED';
+                    btn.innerText = '✓ QUEST CLEARED';
                 } else {
-                    card.style.borderColor = 'rgba(0, 210, 255, 0.3)';
+                    card.style.borderColor = 'rgba(168, 85, 247, 0.6)';
                     btn.innerText = 'COMPLETE QUEST';
                 }
             });
