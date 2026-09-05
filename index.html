@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOLO LEVELING: ARISE - Anime RPG Style UI</title>
+    <title>SOLO LEVELING: ARISE - Full Dark Purple Theme</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@600;700&display=swap');
 
@@ -15,9 +15,15 @@
             user-select: none;
         }
 
+        /* --- LATAR BELAKANG UTAMA WEB (DARK PURPLE) --- */
         body {
-            background: radial-gradient(circle at center, #101227 0%, #05060f 100%);
-            color: #ffffff;
+            background-color: #07020d;
+            background-image: 
+                radial-gradient(circle at 50% 20%, #210936 0%, transparent 60%),
+                radial-gradient(circle at 80% 80%, #150524 0%, transparent 50%),
+                linear-gradient(180deg, #07020d 0%, #0d041a 100%);
+            background-attachment: fixed;
+            color: #f1f5f9;
             padding: 20px;
             display: flex;
             justify-content: center;
@@ -26,29 +32,122 @@
             overflow-x: hidden;
         }
 
-        /* Anime RPG System Overlay Pattern */
-        body::before {
-            content: '';
+        /* --- LOADING SCREEN STYLE (FULL DARK PURPLE & 9 DETIK) --- */
+        #loading-screen {
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: linear-gradient(135deg, rgba(74, 0, 224, 0.1) 0%, rgba(142, 45, 226, 0.05) 100%),
-                        radial-gradient(circle at 50% 30%, rgba(0, 162, 255, 0.15), transparent 60%);
-            z-index: -1;
-            pointer-events: none;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #090312 url('https://images.alphacoders.com/135/1350812.png') no-repeat center center/cover;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 60px;
+            transition: opacity 0.8s ease, visibility 0.8s;
         }
 
-        /* Glassmorphism Window UI Anime Game */
+        #loading-screen::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, rgba(13, 4, 26, 0.7) 0%, rgba(7, 2, 13, 0.98) 85%);
+            z-index: 1;
+        }
+
+        .loading-content {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .loading-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: #ffffff;
+            text-shadow: 0 0 20px #a855f7, 0 0 40px #7e22ce;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .loading-subtitle {
+            font-size: 0.95rem;
+            color: #c084fc;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+        }
+
+        .loading-bar-bg {
+            width: 100%;
+            height: 12px;
+            background: rgba(19, 7, 36, 0.9);
+            border: 1px solid #a855f7;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+            position: relative;
+        }
+
+        .loading-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #581c87, #a855f7, #e879f9);
+            box-shadow: 0 0 20px #a855f7;
+            transition: width 0.1s linear;
+        }
+
+        .loading-status {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #e9d5ff;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* --- MAIN SYSTEM WINDOW UI --- */
         .system-window {
             width: 100%;
             max-width: 680px;
-            background: rgba(15, 18, 38, 0.85);
+            background: rgba(19, 7, 36, 0.92);
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(0, 204, 255, 0.3);
-            box-shadow: 0 0 35px rgba(0, 102, 255, 0.25), inset 0 0 15px rgba(140, 0, 255, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            box-shadow: 0 0 35px rgba(88, 28, 135, 0.5), inset 0 0 15px rgba(168, 85, 247, 0.15);
             border-radius: 16px;
             padding: 25px;
             position: relative;
             clip-path: polygon(0 0, 97% 0, 100% 3%, 100% 100%, 3% 100%, 0 97%);
+        }
+
+        .bgm-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid #a855f7;
+            color: #c084fc;
+            padding: 5px 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 1px;
+            z-index: 10;
+        }
+
+        .bgm-btn:hover {
+            background: #a855f7;
+            color: #fff;
+            box-shadow: 0 0 10px #a855f7;
         }
 
         .header h1 {
@@ -57,14 +156,46 @@
             font-weight: 900;
             letter-spacing: 3px;
             text-align: center;
-            background: linear-gradient(180deg, #ffffff 30%, #00d2ff 100%);
+            background: linear-gradient(180deg, #ffffff 30%, #c084fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(0, 210, 255, 0.6);
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
             text-transform: uppercase;
         }
 
-        /* Navigation Tabs Anime RPG Style */
+        .character-profile {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            background: rgba(12, 4, 24, 0.85);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            margin-bottom: 15px;
+        }
+
+        .avatar-box {
+            width: 85px;
+            height: 85px;
+            border-radius: 8px;
+            border: 2px solid #a855f7;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+            overflow: hidden;
+            background: #090312;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .avatar-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-info {
+            flex-grow: 1;
+        }
+
         .nav-tabs {
             display: flex;
             gap: 8px;
@@ -75,9 +206,9 @@
         .tab-btn {
             flex: 1;
             min-width: 80px;
-            background: linear-gradient(180deg, rgba(20, 27, 58, 0.9) 0%, rgba(10, 14, 32, 0.9) 100%);
-            border: 1px solid rgba(0, 183, 255, 0.3);
-            color: #8a99ad;
+            background: linear-gradient(180deg, rgba(30, 11, 56, 0.9) 0%, rgba(15, 5, 28, 0.9) 100%);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            color: #c084fc;
             padding: 10px 4px;
             font-weight: 700;
             font-size: 0.85rem;
@@ -91,16 +222,16 @@
 
         .tab-btn:hover {
             color: #fff;
-            border-color: #00d2ff;
-            box-shadow: 0 0 12px rgba(0, 210, 255, 0.4);
+            border-color: #a855f7;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
             transform: translateY(-2px);
         }
 
         .tab-btn.active {
-            background: linear-gradient(180deg, #0088ff 0%, #0044ff 100%);
+            background: linear-gradient(180deg, #7e22ce 0%, #3b0764 100%);
             color: #ffffff;
-            border-color: #00f0ff;
-            box-shadow: 0 0 20px rgba(0, 136, 255, 0.8);
+            border-color: #e879f9;
+            box-shadow: 0 0 20px rgba(126, 34, 206, 0.8);
             text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
         }
 
@@ -118,15 +249,14 @@
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* Status & Character Card Anime Style */
         .status-card {
-            background: linear-gradient(135deg, rgba(18, 24, 51, 0.9) 0%, rgba(10, 13, 28, 0.9) 100%);
-            border: 1px solid rgba(0, 170, 255, 0.25);
-            border-left: 4px solid #00d2ff;
+            background: linear-gradient(135deg, rgba(28, 9, 54, 0.9) 0%, rgba(12, 4, 24, 0.9) 100%);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-left: 4px solid #a855f7;
             padding: 20px;
             border-radius: 12px;
             margin-bottom: 15px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
         }
 
         .stat-row {
@@ -139,27 +269,26 @@
         }
 
         .btn-stat {
-            background: linear-gradient(180deg, #ffaa00 0%, #ff6600 100%);
+            background: linear-gradient(180deg, #a855f7 0%, #6b21a8 100%);
             color: #fff;
-            border: none;
+            border: 1px solid #c084fc;
             padding: 3px 12px;
             font-weight: 900;
             cursor: pointer;
             border-radius: 4px;
-            box-shadow: 0 0 10px rgba(255, 150, 0, 0.5);
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
             transition: all 0.2s;
         }
 
         .btn-stat:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(255, 170, 0, 0.8);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.8);
         }
 
-        /* Anime EXP Bar Glow */
         .exp-bar-bg {
             width: 100%;
-            background: #090c18;
-            border: 1px solid rgba(0, 210, 255, 0.3);
+            background: #0d041a;
+            border: 1px solid rgba(168, 85, 247, 0.4);
             height: 16px;
             border-radius: 8px;
             overflow: hidden;
@@ -170,15 +299,14 @@
         .exp-bar-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #0055ff, #00d2ff, #00ffaa);
-            box-shadow: 0 0 12px #00d2ff;
+            background: linear-gradient(90deg, #581c87, #a855f7, #f472b6);
+            box-shadow: 0 0 12px #a855f7;
             transition: width 0.4s ease-in-out;
         }
 
-        /* Item Cards */
         .item-card {
-            background: rgba(18, 24, 51, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(26, 8, 51, 0.75);
+            border: 1px solid rgba(168, 85, 247, 0.2);
             padding: 16px;
             border-radius: 10px;
             margin-bottom: 12px;
@@ -189,56 +317,57 @@
         }
 
         .item-card:hover {
-            border-color: rgba(0, 210, 255, 0.5);
-            background: rgba(25, 33, 68, 0.8);
+            border-color: rgba(168, 85, 247, 0.6);
+            background: rgba(38, 12, 74, 0.85);
             transform: translateX(4px);
         }
 
-        /* Anime Action Button (Gold / Cyan Gradient) */
         .btn-action {
-            background: linear-gradient(180deg, #00d2ff 0%, #0055ff 100%);
+            background: linear-gradient(180deg, #9333ea 0%, #581c87 100%);
             color: #ffffff;
-            border: none;
+            border: 1px solid #c084fc;
             padding: 10px 18px;
             font-weight: 700;
             font-size: 0.9rem;
             letter-spacing: 1px;
             cursor: pointer;
             border-radius: 6px;
-            box-shadow: 0 4px 15px rgba(0, 136, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
             transition: all 0.2s ease;
             text-transform: uppercase;
         }
 
         .btn-action:hover {
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.8);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.8);
             transform: translateY(-2px);
         }
 
         .btn-action:disabled {
-            background: #1a2035;
-            color: #4a5568;
+            background: #19092d;
+            border-color: #3b1754;
+            color: #583d73;
             box-shadow: none;
             cursor: not-allowed;
             transform: none;
         }
 
         .btn-danger {
-            background: linear-gradient(180deg, #ff0055 0%, #990033 100%);
-            box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4);
+            background: linear-gradient(180deg, #be123c 0%, #7f1d1d 100%);
+            border-color: #f43f5e;
+            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
         }
 
         .btn-danger:hover {
-            box-shadow: 0 0 20px rgba(255, 0, 85, 0.8);
+            box-shadow: 0 0 20px rgba(225, 29, 72, 0.8);
         }
 
         .story-box {
-            background: rgba(10, 13, 28, 0.9);
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            border-left: 3px solid #ffcc00;
+            background: rgba(12, 4, 24, 0.9);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-left: 3px solid #e879f9;
             padding: 16px;
             border-radius: 8px;
-            color: #d1d5db;
+            color: #e2e8f0;
             line-height: 1.6;
             margin-bottom: 15px;
             font-size: 0.95rem;
@@ -248,18 +377,18 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            background: rgba(10, 13, 28, 0.8);
-            border: 1px solid rgba(0, 210, 255, 0.2);
+            background: rgba(12, 4, 24, 0.85);
+            border: 1px solid rgba(168, 85, 247, 0.3);
             padding: 15px;
             border-radius: 12px;
             margin-bottom: 15px;
         }
 
         .team-box {
-            background: rgba(20, 27, 58, 0.8);
+            background: rgba(26, 8, 51, 0.8);
             padding: 12px;
             border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(168, 85, 247, 0.2);
         }
 
         .team-title {
@@ -272,27 +401,26 @@
 
         .unit-list {
             font-size: 0.85rem;
-            color: #a0aec0;
+            color: #e9d5ff;
             line-height: 1.6;
         }
 
         .battle-log {
-            background: #060812;
-            border: 1px solid rgba(0, 210, 255, 0.2);
+            background: #090312;
+            border: 1px solid rgba(168, 85, 247, 0.3);
             padding: 12px;
             height: 130px;
             overflow-y: auto;
             font-size: 0.85rem;
-            color: #00d2ff;
+            color: #c084fc;
             margin-top: 10px;
             border-radius: 8px;
         }
 
-        /* Modal Screens Anime Gacha/Levelup */
         #levelup-overlay, #penalty-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(5, 7, 18, 0.92);
+            background: rgba(7, 2, 13, 0.96);
             backdrop-filter: blur(12px);
             display: none;
             justify-content: center;
@@ -306,27 +434,42 @@
             font-family: 'Orbitron', sans-serif;
             font-size: 3.8rem;
             font-weight: 900;
-            background: linear-gradient(180deg, #fff 20%, #ffcc00 100%);
+            background: linear-gradient(180deg, #fff 20%, #c084fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(255, 204, 0, 0.8);
+            text-shadow: 0 0 30px rgba(192, 132, 252, 0.8);
         }
 
         #penalty-overlay h1 {
             font-family: 'Orbitron', sans-serif;
             font-size: 3rem;
             font-weight: 900;
-            color: #ff0055;
-            text-shadow: 0 0 30px rgba(255, 0, 85, 0.8);
+            color: #f43f5e;
+            text-shadow: 0 0 30px rgba(244, 63, 94, 0.8);
         }
     </style>
 </head>
 <body>
 
+    <!-- LOADING SCREEN -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-title">MONARCH WARFARE</div>
+            <div class="loading-subtitle">SHADOW ARMY VS ALL MONARCHS</div>
+            <div class="loading-bar-bg">
+                <div id="loading-bar" class="loading-bar-fill"></div>
+            </div>
+            <div class="loading-status">
+                <span id="loading-text">INITIALIZING SYSTEM...</span>
+                <span id="loading-percent">0%</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Overlay Level Up -->
     <div id="levelup-overlay">
         <h1>LEVEL UP!</h1>
-        <p style="color: #00d2ff; font-size: 1.3rem; margin-top: 10px; font-weight: 700;">[ YOU GAINED +3 STAT POINTS ]</p>
+        <p style="color: #c084fc; font-size: 1.3rem; margin-top: 10px; font-weight: 700;">[ YOU GAINED +3 STAT POINTS ]</p>
         <button class="btn-action" style="margin-top: 25px; padding: 12px 30px;" onclick="closeLevelUp()">CONTINUE</button>
     </div>
 
@@ -334,20 +477,34 @@
     <div id="penalty-overlay">
         <h1>WARNING: PENALTY ZONE</h1>
         <p style="color: #e2e8f0; margin: 10px 0; text-align: center; font-size: 1.1rem;">Kamu gagal menjalankan Quest! Bertahanlah dari monster pasir!</p>
-        <div id="penalty-timer" style="font-family: 'Orbitron', sans-serif; font-size: 3.5rem; color: #ff0055; font-weight: bold; margin: 10px 0;">30</div>
-        <p style="color: #a0aec0; font-size: 0.9rem;">Lakukan Lari di Tempat sampai waktu habis!</p>
+        <div id="penalty-timer" style="font-family: 'Orbitron', sans-serif; font-size: 3.5rem; color: #f43f5e; font-weight: bold; margin: 10px 0;">30</div>
+        <p style="color: #a1a1aa; font-size: 0.9rem;">Lakukan Lari di Tempat sampai waktu habis!</p>
     </div>
 
     <div class="system-window">
+        <button class="bgm-btn" id="bgm-toggle" onclick="toggleBGM()">♫ MUSIC OFF</button>
+        
         <div class="header">
             <h1>SYSTEM QUEST</h1>
-            <p style="color: #718096; font-size: 0.8rem; text-align: center; margin-top: 3px; font-weight: 700; letter-spacing: 2px;">[ SOLO LEVELING PROGRAM ]</p>
+            <p style="color: #c084fc; font-size: 0.8rem; text-align: center; margin-top: 3px; font-weight: 700; letter-spacing: 2px;">[ SOLO LEVELING PROGRAM ]</p>
+        </div>
+
+        <!-- VISUAL KARAKTER ANIME -->
+        <div class="character-profile" style="margin-top: 15px;">
+            <div class="avatar-box">
+                <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=300&auto=format&fit=crop&q=80" alt="Character Avatar">
+            </div>
+            <div class="avatar-info">
+                <div style="font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: #fff; font-weight: 700;">SUNG JIN-WOO</div>
+                <div style="font-size: 0.85rem; color: #c084fc; font-weight: 700;">JOB: SHADOW MONARCH</div>
+                <div style="font-size: 0.8rem; color: #e9d5ff; margin-top: 4px;">COMBAT POWER (CP): <span id="val-cp" style="color: #e879f9; font-weight: bold;">1,250</span></div>
+            </div>
         </div>
 
         <div class="nav-tabs">
             <button class="tab-btn active" onclick="switchTab('status', event)">STATUS</button>
-            <button class="tab-btn" onclick="switchTab('story', event)">PROLOGUE</button>
             <button class="tab-btn" onclick="switchTab('quests', event)">QUESTS</button>
+            <button class="tab-btn" onclick="switchTab('story', event)">PROLOGUE</button>
             <button class="tab-btn" onclick="switchTab('dungeon', event)">DUNGEON</button>
             <button class="tab-btn" onclick="switchTab('shop', event)">SHOP</button>
             <button class="tab-btn" onclick="switchTab('gacha', event)">GACHA</button>
@@ -359,20 +516,18 @@
             <div class="status-card">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <div style="font-size: 1.1rem; color: #a0aec0;">PLAYER: <strong style="color: #fff;">SUNG JIN-WOO</strong></div>
-                        <div style="font-size: 1.1rem; color: #a0aec0;">LEVEL: <strong id="val-level" style="color: #00d2ff; font-family: 'Orbitron', sans-serif;">1</strong></div>
+                        <div style="font-size: 1.1rem; color: #e9d5ff;">LEVEL: <strong id="val-level" style="color: #c084fc; font-family: 'Orbitron', sans-serif;">1</strong></div>
                     </div>
                     <div style="text-align: right;">
-                        <div id="val-rank" style="font-family: 'Orbitron', sans-serif; font-size: 1.4rem; color: #ffcc00; font-weight: 900;">E-RANK</div>
-                        <small id="val-rank-desc" style="color: #718096;">(Sung Jin-Woo Lemah)</small>
+                        <div id="val-rank" style="font-family: 'Orbitron', sans-serif; font-size: 1.4rem; color: #e879f9; font-weight: 900;">E-RANK</div>
+                        <small id="val-rank-desc" style="color: #a855f7;">(Sung Jin-Woo Lemah)</small>
                     </div>
                 </div>
-                <hr style="border-color: rgba(255, 255, 255, 0.08); margin: 14px 0;">
-                <div style="font-size: 1rem; color: #a0aec0;">GOLD: <strong id="val-gold" style="color: #ffcc00;">0</strong> G</div>
-                <div style="font-size: 1rem; color: #a0aec0;">STAT POINTS: <strong id="val-statpoints" style="color: #ff0055;">0</strong></div>
+                <hr style="border-color: rgba(168, 85, 247, 0.15); margin: 14px 0;">
+                <div style="font-size: 1rem; color: #e9d5ff;">GOLD: <strong id="val-gold" style="color: #e879f9;">0</strong> G</div>
+                <div style="font-size: 1rem; color: #e9d5ff;">STAT POINTS: <strong id="val-statpoints" style="color: #f43f5e;">0</strong></div>
                 
-                <!-- Stat Allocator -->
-                <div style="margin-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 10px;">
+                <div style="margin-top: 12px; border-top: 1px solid rgba(168, 85, 247, 0.15); padding-top: 10px;">
                     <div class="stat-row">
                         <span>STR (Strength): <strong id="val-str" style="color: #fff;">10</strong></span>
                         <button class="btn-stat" onclick="addStat('str')">+</button>
@@ -387,7 +542,7 @@
                     </div>
                 </div>
 
-                <div style="margin-top: 15px; font-size: 0.9rem; color: #a0aec0;">
+                <div style="margin-top: 15px; font-size: 0.9rem; color: #e9d5ff;">
                     EXP: <span id="val-exp">0</span> / <span id="val-maxexp">100</span>
                     <div class="exp-bar-bg">
                         <div id="val-expbar" class="exp-bar-fill"></div>
@@ -396,16 +551,7 @@
             </div>
 
             <h3 style="margin-bottom: 10px; font-size: 1.05rem; color: #fff; font-family: 'Orbitron', sans-serif;">INVENTORY ITEMS:</h3>
-            <div id="inventory-list" style="color: #a0aec0; font-size: 0.95rem;">(Kosong)</div>
-        </div>
-
-        <!-- TAB PROLOGUE -->
-        <div id="tab-story" class="tab-content">
-            <h3 style="margin-bottom: 10px; color: #fff; font-family: 'Orbitron', sans-serif;">SYSTEM PROLOGUE</h3>
-            <div class="story-box">
-                "Kamu telah dipilih sebagai Player. Jika kamu tidak menyelesaikan Quest Harian ini, hukuman (*Penalty Zone*) akan langsung diaktifkan secara otomatis oleh System..."
-            </div>
-            <p style="font-size: 0.9rem; color: #718096;">Selesaikan latihan fisik harian untuk meningkatkan Rank dan membangkitkan Shadow Army milikmu.</p>
+            <div id="inventory-list" style="color: #e9d5ff; font-size: 0.95rem;">(Kosong)</div>
         </div>
 
         <!-- TAB QUESTS -->
@@ -413,72 +559,4 @@
             <h3 style="margin-bottom: 12px; color: #fff; font-family: 'Orbitron', sans-serif;">DAILY WORKOUT QUEST</h3>
             <div class="item-card">
                 <div>
-                    <strong style="font-size: 1.05rem; color: #fff;">Push-Up 10x</strong><br>
-                    <small style="color: #718096;">+30 EXP | +50 Gold</small>
-                </div>
-                <div style="display: flex; gap: 8px;">
-                    <button class="btn-action" onclick="completeQuest(30, 50, this)">SELESAI</button>
-                    <button class="btn-action btn-danger" onclick="triggerPenalty()">GAGAL</button>
-                </div>
-            </div>
-            <div class="item-card">
-                <div>
-                    <strong style="font-size: 1.05rem; color: #fff;">Sit-Up 10x</strong><br>
-                    <small style="color: #718096;">+30 EXP | +50 Gold</small>
-                </div>
-                <div style="display: flex; gap: 8px;">
-                    <button class="btn-action" onclick="completeQuest(30, 50, this)">SELESAI</button>
-                    <button class="btn-action btn-danger" onclick="triggerPenalty()">GAGAL</button>
-                </div>
-            </div>
-            <div class="item-card">
-                <div>
-                    <strong style="font-size: 1.05rem; color: #fff;">Squat 10x</strong><br>
-                    <small style="color: #718096;">+40 EXP | +100 Gold</small>
-                </div>
-                <div style="display: flex; gap: 8px;">
-                    <button class="btn-action" onclick="completeQuest(40, 100, this)">SELESAI</button>
-                    <button class="btn-action btn-danger" onclick="triggerPenalty()">GAGAL</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB DUNGEON -->
-        <div id="tab-dungeon" class="tab-content">
-            <div id="dungeon-locked" style="text-align: center; color: #718096; padding: 25px; font-size: 1rem;">
-                Dungeon terkunci. Capai kelipatan <strong style="color: #00d2ff;">Level 5</strong> untuk membongkar Red Gate!
-            </div>
-            <div id="dungeon-unlocked" style="display: none; background: linear-gradient(135deg, rgba(128, 0, 32, 0.9), rgba(50, 0, 10, 0.9)); border: 2px solid #ff0055; padding: 20px; border-radius: 12px; text-align: center; color: #fff; box-shadow: 0 0 25px rgba(255, 0, 85, 0.5);">
-                <h2 style="font-family: 'Orbitron', sans-serif;">★ RED GATE DUNGEON UNLOCKED ★</h2>
-                <p style="margin: 10px 0; font-size: 0.95rem; color: #e2e8f0;">Selesaikan Tantangan Intensif!</p>
-                <p style="font-size: 1.1rem;"><strong>TANTANGAN: Burpee 15x</strong></p>
-                <button class="btn-action" style="background: linear-gradient(180deg, #fff 0%, #cbd5e1 100%); color: #000; margin-top: 15px;" onclick="clearDungeon()">TALUKKAN DUNGEON</button>
-            </div>
-        </div>
-
-        <!-- TAB SHOP -->
-        <div id="tab-shop" class="tab-content">
-            <h3 style="margin-bottom: 12px; color: #fff; font-family: 'Orbitron', sans-serif;">SYSTEM SHOP</h3>
-            <div class="item-card">
-                <div>
-                    <strong style="font-size: 1.05rem; color: #fff;">Rasaka's Dagger</strong><br>
-                    <small style="color: #718096;">Harga: 200 Gold</small>
-                </div>
-                <button class="btn-action" onclick="buyItem('Rasaka\'s Dagger', 200)">BELI</button>
-            </div>
-            <div class="item-card">
-                <div>
-                    <strong style="font-size: 1.05rem; color: #fff;">EXP Booster Potion</strong><br>
-                    <small style="color: #718096;">Harga: 150 Gold</small>
-                </div>
-                <button class="btn-action" onclick="buyItem('EXP Booster Potion', 150)">BELI</button>
-            </div>
-        </div>
-
-        <!-- TAB GACHA -->
-        <div id="tab-gacha" class="tab-content">
-            <h3 style="margin-bottom: 8px; color: #fff; font-family: 'Orbitron', sans-serif;">SHADOW SUMMON (GACHA)</h3>
-            <p style="font-size: 0.9rem; color: #718096; margin-bottom: 15px;">Biaya: 100 Gold per Summon</p>
-            <button class="btn-action" style="width: 100%; padding: 14px; font-size: 1rem;" onclick="rollGacha()">SUMMON SHADOW (100 G)</button>
-            <div id="gacha-result" style="margin-top: 18px; text-align: center; font-weight: bold; color: #ffcc00; font-size: 1.1rem; font-family: 'Orbitron', sans-serif;"></div>
-   
+                    <strong style="fo
