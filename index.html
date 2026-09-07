@@ -3,242 +3,692 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solo Leveling - Hunter Workout System</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Solo Leveling: Arise | System UI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* Efek Glow & Panel ala System Solo Leveling */
-        .system-glow {
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4), inset 0 0 15px rgba(59, 130, 246, 0.2);
+        :root {
+            --bg-deep: #0a0812;
+            --bg-card: #131022;
+            --accent-purple: #8b5cf6;
+            --accent-glow: rgba(139, 92, 246, 0.25);
+            --border-color: rgba(139, 92, 246, 0.3);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --danger: #ef4444;
+            --gold: #f59e0b;
+            --success: #10b981;
         }
-        .system-border {
-            border: 1px solid rgba(59, 130, 246, 0.5);
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 50% 10%, rgba(139, 92, 246, 0.12) 0%, transparent 50%),
+                linear-gradient(to bottom, #0a0812, #050409);
         }
-        /* Background Banner dengan Overlay Gelap agar teks terbaca jelas */
-        .hero-bg {
-            background-image: linear-gradient(to bottom, rgba(2, 6, 23, 0.85), rgba(2, 6, 23, 0.95)), url('watermarked_img_367534310976328275.jpg');
-            background-size: cover;
-            background-position: center;
+
+        /* HEADER / TOP HUD */
+        header {
+            background: rgba(13, 10, 22, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 14px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+        .logo span { color: var(--accent-purple); }
+
+        .status-metrics {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .metric-badge {
+            background: rgba(19, 16, 34, 0.8);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        .metric-badge span { color: #fff; font-weight: 700; }
+        .metric-badge .val-purple { color: var(--accent-purple); }
+        .metric-badge .val-gold { color: var(--gold); }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* TAB NAVIGATION */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: #fff;
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-purple);
+            color: #fff;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .section-view { display: none; }
+        .section-view.active { display: block; }
+
+        /* CARDS & GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .ui-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ui-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-purple);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.15);
+        }
+
+        /* IMAGE CONTAINER */
+        .card-img-wrap {
+            width: 100%;
+            height: 240px;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+        }
+
+        .card-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(10, 8, 18, 0.85);
+            border: 1px solid var(--border-color);
+            color: var(--accent-purple);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            backdrop-filter: blur(4px);
+            z-index: 2;
+        }
+
+        .card-content {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 16px;
+            flex-grow: 1;
+        }
+
+        /* LORE / PLOT SECTION BOX */
+        .lore-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .lore-box h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-purple);
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        .lore-box p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        /* BUTTONS */
+        .btn {
+            width: 100%;
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid var(--accent-purple);
+            color: var(--accent-purple);
+            padding: 10px;
+            border-radius: 6px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: var(--accent-purple);
+            color: #fff;
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        .btn.cleared {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .btn.danger {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+        .btn.danger:hover {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        .category-header {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 30px 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .category-header::after {
+            content: "";
+            flex-grow: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        /* PROLOGUE MODAL */
+        #login-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 4, 9, 0.92);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: var(--bg-card);
+            border: 1px solid var(--danger);
+            max-width: 420px;
+            width: 100%;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.2);
+        }
+
+        .modal-box h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--danger);
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .modal-box p {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 20px;
         }
     </style>
 </head>
-<body class="bg-slate-950 text-blue-100 font-sans min-h-screen selection:bg-blue-600 selection:text-white">
+<body>
 
-    <!-- Header / System Notice -->
-    <header class="hero-bg system-border shadow-2xl relative overflow-hidden border-b">
-        <div class="max-w-4xl mx-auto px-4 py-8 flex flex-col sm:flex-row justify-between items-center gap-4 relative z-10">
-            <div>
-                <span class="text-xs uppercase tracking-widest text-blue-400 font-bold animate-pulse">[DAILY QUEST: PREPARE TO BECOME STRONGER]</span>
-                <h1 class="text-2xl sm:text-3xl font-black tracking-wider text-white flex items-center gap-2 mt-1">
-                    ⚡ HUNTER SYSTEM <span class="text-xs font-normal bg-blue-950/80 text-blue-300 px-2.5 py-1 rounded border border-blue-700">Rank E ➔ S</span>
-                </h1>
-            </div>
-            <div id="stats" class="text-sm bg-slate-900/90 backdrop-blur system-border px-5 py-3 rounded-2xl flex items-center gap-4 system-glow">
-                <div>Progress: <span id="completed-count" class="font-bold text-blue-400 text-base">0</span> / <span id="total-count" class="font-bold text-white text-base">0</span></div>
-                <div class="h-5 w-px bg-blue-800"></div>
-                <div id="status-text" class="text-xs text-amber-400 font-bold tracking-wider">PENDING</div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-4 py-8 space-y-8">
-
-        <!-- Peringatan Hukuman (Penalty Quest Warning) -->
-        <div class="bg-blue-950/60 backdrop-blur system-border p-4 rounded-2xl text-xs sm:text-sm text-blue-300 flex items-start gap-3 system-glow">
-            <span class="text-xl">⚠️</span>
-            <div>
-                <strong class="text-white block mb-0.5">[REWARD SYSTEM INFO]:</strong>
-                "Selesaikan seluruh misi latihan harian untuk mengaktifkan <span class="text-blue-400 font-bold">Full Recovery</span> dan hilangkan seluruh kelelahan fisik!"
-            </div>
-        </div>
-
-        <!-- Form Tambah Latihan -->
-        <section class="bg-slate-900/95 backdrop-blur system-border p-6 rounded-2xl shadow-xl">
-            <h2 class="text-sm font-bold uppercase tracking-wider text-blue-400 mb-4 flex items-center gap-2">
-                <span>➕</span> Tambah Misi Latihan Baru
-            </h2>
-            <form id="workout-form" class="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                <input type="text" id="workout-name" placeholder="Nama Latihan (Cth: Push Up)" required
-                    class="bg-slate-950 system-border rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-400">
-                
-                <input type="text" id="workout-sets" placeholder="Target (Cth: 100 Reps)" required
-                    class="bg-slate-950 system-border rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-400">
-                
-                <select id="workout-category" class="bg-slate-950 system-border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-400">
-                    <option value="Kekuatan">Kekuatan Otot</option>
-                    <option value="Ketahanan">Ketahanan (Stamina)</option>
-                    <option value="Kelenturan">Kelenturan</option>
-                    <option value="Kardio">Kardio Ekstrem</option>
-                </select>
-
-                <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl py-2.5 text-sm transition shadow-lg shadow-blue-600/30 uppercase tracking-wider">
-                    Inisiasi Misi
-                </button>
-            </form>
-        </section>
-
-        <!-- Daftar Latihan / Misi -->
-        <section class="space-y-4">
-            <div class="flex justify-between items-center">
-                <h2 class="text-lg font-bold tracking-wide text-white uppercase flex items-center gap-2">
-                    <span>📜</span> Daftar Misi Hari Ini
-                </h2>
-                <button id="reset-btn" class="text-xs text-slate-400 hover:text-blue-400 transition underline">Reset Misi</button>
-            </div>
-            
-            <div id="workout-list" class="space-y-3">
-                <!-- Item workout dirender otomatis lewat JavaScript -->
-            </div>
-
-            <!-- Pesan Kosong -->
-            <div id="empty-state" class="hidden text-center py-12 text-slate-500 bg-slate-900/50 rounded-2xl system-border">
-                Tidak ada misi aktif. Sistem menunggu perintah Anda, Hunter.
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Modal Sukses Quest (Popup ala Solo Leveling) -->
-    <div id="success-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden items-center justify-center p-4 z-50">
-        <div class="bg-slate-900 system-border p-8 rounded-3xl max-w-md w-full text-center space-y-5 system-glow">
-            <div class="text-5xl animate-bounce">🏆</div>
-            <h3 class="text-xl font-black text-white tracking-wider">[QUEST SELESAI!]</h3>
-            <p class="text-sm text-blue-300">Anda telah menyelesaikan seluruh misi latihan harian. Status fisik meningkat secara drastis!</p>
-            <div class="bg-blue-950/80 p-3.5 rounded-2xl border border-blue-700 text-xs text-blue-300 font-mono">
-                🎁 [REWARD: "FULL RECOVERY" HAS BEEN GRANTED. ALL FATIGUE HAS BEEN REMOVED.]
-            </div>
-            <button onclick="closeModal()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl text-sm transition uppercase tracking-wider shadow-lg shadow-blue-600/40">
-                Konfirmasi
-            </button>
+    <!-- MODAL AWAL -->
+    <div id="login-overlay" style="display: none;">
+        <div class="modal-box">
+            <h3>[SYSTEM AWAKENING]</h3>
+            <p>Status terdeteksi: <b>E-Rank Hunter (Terlemah)</b>.<br>Apakah Anda ingin menerima akses sistem untuk memulai kenaikan level?</p>
+            <button class="btn" style="border-color:var(--danger); color:var(--danger);" onclick="acceptAwakening()">TERIMA SISTEM</button>
         </div>
     </div>
 
-    <!-- JavaScript Interaktif -->
-    <script>
-        // Data awal quest legendaris Sung Jin-Woo
-        let workouts = JSON.parse(localStorage.getItem('solo_workouts_v2')) || [
-            { id: 1, name: 'Push-Ups', sets: '100 Reps', category: 'Kekuatan', completed: false },
-            { id: 2, name: 'Sit-Ups', sets: '100 Reps', category: 'Kekuatan', completed: false },
-            { id: 3, name: 'Squats', sets: '100 Reps', category: 'Ketahanan', completed: false },
-            { id: 4, name: 'Running', sets: '10 KM', category: 'Kardio', completed: false }
-        ];
+    <!-- HEADER HUD -->
+    <header>
+        <div class="logo">SOLO LEVELING <span>ARISE</span></div>
+        <div class="status-metrics">
+            <div class="metric-badge">RANK: <span id="player-rank" class="val-purple">E-RANK</span></div>
+            <div class="metric-badge">LEVEL: <span id="player-level">1</span></div>
+            <div class="metric-badge">EXP: <span id="player-exp">0</span>/100</div>
+            <div class="metric-badge">GOLD: <span id="player-gold" class="val-gold">0</span> G</div>
+        </div>
+    </header>
 
-        const form = document.getElementById('workout-form');
-        const nameInput = document.getElementById('workout-name');
-        const setsInput = document.getElementById('workout-sets');
-        const categoryInput = document.getElementById('workout-category');
-        const workoutList = document.getElementById('workout-list');
-        const emptyState = document.getElementById('empty-state');
-        const completedCountEl = document.getElementById('completed-count');
-        const totalCountEl = document.getElementById('total-count');
-        const resetBtn = document.getElementById('reset-btn');
-        const statusText = document.getElementById('status-text');
-        const successModal = document.getElementById('success-modal');
+    <div class="container">
+        <!-- TAB NAVIGATION -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('calisthenics', this)">CALISTHENICS QUEST</button>
+            <button class="tab-btn" onclick="switchTab('gym', this)">GYM DUNGEON</button>
+            <button class="tab-btn" onclick="switchTab('roster', this)">HUNTER ROSTER</button>
+            <button class="tab-btn" onclick="switchTab('plot', this)">PLOT & LORE</button>
+            <button class="tab-btn" onclick="switchTab('comic', this)">MANHWA ARC</button>
+            <button class="tab-btn" onclick="switchTab('ranks', this)">RANK DATABASE</button>
+        </div>
 
-        let modalShown = false;
-
-        function saveToLocalStorage() {
-            localStorage.setItem('solo_workouts_v2', JSON.stringify(workouts));
-        }
-
-        function renderWorkouts() {
-            workoutList.innerHTML = '';
-            
-            if (workouts.length === 0) {
-                emptyState.classList.remove('hidden');
-            } else {
-                emptyState.classList.add('hidden');
-            }
-
-            let completedCount = 0;
-
-            workouts.forEach(workout => {
-                if (workout.completed) completedCount++;
-
-                const item = document.createElement('div');
-                item.className = `p-4 rounded-2xl transition flex items-center justify-between system-border ${workout.completed ? 'bg-blue-950/30 opacity-60 border-blue-900/40' : 'bg-slate-900/90 shadow-md'}`;
-                
-                item.innerHTML = `
-                    <div class="flex items-center space-x-4">
-                        <input type="checkbox" ${workout.completed ? 'checked' : ''} onclick="toggleWorkout(${workout.id})"
-                            class="w-5 h-5 accent-blue-500 rounded cursor-pointer">
-                        <div>
-                            <h3 class="font-bold text-white ${workout.completed ? 'line-through text-slate-500' : ''}">${workout.name}</h3>
-                            <p class="text-xs text-blue-400 font-mono">${workout.sets} &bull; <span class="text-slate-400">${workout.category}</span></p>
-                        </div>
+        <!-- SECTION 1: CALISTHENICS -->
+        <div id="calisthenics" class="section-view active">
+            <div class="grid">
+                <div class="ui-card" data-id="c1">
+                    <div class="card-content">
+                        <div class="card-title">Knee Push-Ups</div>
+                        <div class="card-desc">Latihan dasar melatih otot dada awal bagi pemula.<br><b>Reward:</b> +20 EXP | 30 Gold</div>
+                        <button class="btn" onclick="completeQuest('c1', 20, 30)">CLEAR GATE</button>
                     </div>
-                    <button onclick="deleteWorkout(${workout.id})" class="text-slate-500 hover:text-rose-400 p-2 transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                    </button>
-                `;
-                workoutList.appendChild(item);
-            });
+                </div>
+                <div class="ui-card" data-id="c2">
+                    <div class="card-content">
+                        <div class="card-title">100 Sit-Ups</div>
+                        <div class="card-desc">Penguatan daya tahan inti tubuh secara konsisten.<br><b>Reward:</b> +25 EXP | 50 Gold</div>
+                        <button class="btn" onclick="completeQuest('c2', 25, 50)">CLEAR GATE</button>
+                    </div>
+                </div>
+                <div class="ui-card" data-id="c3">
+                    <div class="card-content">
+                        <div class="card-title">Standard Push-Ups</div>
+                        <div class="card-desc">Push-up penuh dengan postur lurus tanpa kompromi.<br><b>Reward:</b> +35 EXP | 80 Gold</div>
+                        <button class="btn" onclick="completeQuest('c3', 35, 80)">CLEAR GATE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            completedCountEl.textContent = completedCount;
-            totalCountEl.textContent = workouts.length;
+        <!-- SECTION 2: GYM -->
+        <div id="gym" class="section-view">
+            <div class="grid">
+                <div class="ui-card" data-id="g1">
+                    <div class="card-content">
+                        <div class="card-title">Dumbbell Bicep Curls</div>
+                        <div class="card-desc">Latihan isolasi lengan atas dengan beban progresif.<br><b>Reward:</b> +30 EXP | 70 Gold</div>
+                        <button class="btn" onclick="completeQuest('g1', 30, 70)">CLEAR GATE</button>
+                    </div>
+                </div>
+                <div class="ui-card" data-id="g2">
+                    <div class="card-content">
+                        <div class="card-title">Barbell Bench Press</div>
+                        <div class="card-desc">Mendorong kekuatan daya dorong dada secara maksimal.<br><b>Reward:</b> +45 EXP | 120 Gold</div>
+                        <button class="btn" onclick="completeQuest('g2', 45, 120)">CLEAR GATE</button>
+                    </div>
+                </div>
+                <div class="ui-card" data-id="g3">
+                    <div class="card-content">
+                        <div class="card-title">Heavy Deadlift</div>
+                        <div class="card-desc">Ujian ketahanan seluruh otot tubuh demi kenaikan level.<br><b>Reward:</b> +60 EXP | 200 Gold</div>
+                        <button class="btn" onclick="completeQuest('g3', 60, 200)">CLEAR GATE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            // Update Status Quest
-            if (workouts.length > 0 && completedCount === workouts.length) {
-                statusText.textContent = "COMPLETED";
-                statusText.className = "text-xs text-emerald-400 font-bold animate-pulse tracking-wider";
-                
-                if (!modalShown) {
-                    successModal.classList.remove('hidden');
-                    successModal.classList.add('flex');
-                    modalShown = true;
-                }
+        <!-- SECTION 3: ROSTER -->
+        <div id="roster" class="section-view">
+            <div class="category-header">MAIN CHARACTERS & ALLIES</div>
+            <div class="grid">
+                <div class="ui-card">
+                    <div class="card-img-wrap">
+                        <span class="card-tag">S-RANK</span>
+                        <img src="https://images.alphacoders.com/134/1349581.png" alt="Sung Jin-Woo">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Sung Jin-Woo</div>
+                        <div class="card-desc">Shadow Monarch. Penguasa pasukan bayangan tak terkalahkan.</div>
+                    </div>
+                </div>
+
+                <div class="ui-card">
+                    <div class="card-img-wrap">
+                        <span class="card-tag">D-RANK</span>
+                        <img src="https://static.wikia.nocookie.net/solo-leveling/images/f/f0/Yoo_Jinho_Anime.png" alt="Yoo Jin-Ho">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Yoo Jin-Ho</div>
+                        <div class="card-desc">Wakil Guild Ahjin, sahabat setia Sung Jin-Woo.</div>
+                    </div>
+                </div>
+
+                <div class="ui-card">
+                    <div class="card-img-wrap">
+                        <span class="card-tag">S-RANK</span>
+                        <img src="https://static.wikia.nocookie.net/solo-leveling/images/8/8c/Go_Gunhee_Anime.png" alt="Go Gun-Hee">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Go Gun-Hee</div>
+                        <div class="card-desc">Ketua Asosiasi Hunter Korea yang berwibawa tinggi.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-header">S-RANK & ELITE HUNTERS</div>
+            <div class="grid">
+                <div class="ui-card">
+                    <div class="card-img-wrap">
+                        <span class="card-tag">S-RANK</span>
+                        <img src="https://static.wikia.nocookie.net/solo-leveling/images/3/36/Cha_Haein_Anime.png" alt="Cha Hae-In">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Cha Hae-In</div>
+                        <div class="card-desc">Ahli pedang presisi tinggi berjuluk The Dancer.</div>
+                    </div>
+                </div>
+
+                <div class="ui-card">
+                    <div class="card-img-wrap">
+                        <span class="card-tag">S-RANK</span>
+                        <img src="https://static.wikia.nocookie.net/solo-leveling/images/2/2f/Choi_Jongin_Anime.png" alt="Choi Jong-In">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Choi Jong-In</div>
+                        <div class="card-desc">Mage api pemusnah massal (The Ultimate Soldier).</div>
+                    </div>
+                </div>
+
+                <div class="ui-card">
+                    <div class="card-img-wrap">
+                        <span class="card-tag">NATIONAL</span>
+                        <img src="https://static.wikia.nocookie.net/solo-leveling/images/5/5a/Thomas_Andre_Anime.png" alt="Thomas Andre">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Thomas Andre</div>
+                        <div class="card-desc">Goliath, Hunter tingkat nasional terkuat asal AS.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-header">SHADOW ARMY</div>
+            <div class="grid">
+                <div class="ui-card">
+                    <div class="card-img-wrap">
+                        <span class="card-tag">MARSHAL</span>
+                        <img src="https://static.wikia.nocookie.net/solo-leveling/images/9/9c/Beru_Anime.png" alt="Beru">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Beru</div>
+                        <div class="card-desc">Raja Semut bayangan dengan kecepatan super kilat.</div>
+                    </div>
+                </div>
+
+                <div class="ui-card">
+                    <div class="card-img-wrap">
+                        <span class="card-tag">COMMANDER</span>
+                        <img src="https://static.wikia.nocookie.net/solo-leveling/images/3/33/Igris_Anime.png" alt="Igris">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Blood-Red Igris</div>
+                        <div class="card-desc">Ksatria zirah merah setia pengawal utama Jin-Woo.</div>
+                    </div>
+                </div>
+
+                <div class="ui-card">
+                    <div class="card-img-wrap">
+                        <span class="card-tag">DESTRUCTION</span>
+                        <img src="https://static.wikia.nocookie.net/solo-leveling/images/a/a2/Antares_Manhwa.png" alt="Antares">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Antares</div>
+                        <div class="card-desc">Raja Naga, Monarch of Destruction terkuat di semesta.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 4: PLOT & LORE -->
+        <div id="plot" class="section-view">
+            <div class="lore-box">
+                <h3>[PREMIS UTAMA & LATAR BELAKANG]</h3>
+                <p>Berlatar di dunia modern tempat gerbang dimensional misterius terbuka dan melepaskan berbagai monster berbahaya ke muka bumi. Manusia terpilih yang memiliki kekuatan supranatural untuk membasmi monster ini disebut sebagai <b>Hunter</b>.</p>
+            </div>
+
+            <div class="lore-box">
+                <h3>[KISAH SUNG JIN-WOO]</h3>
+                <p>Sung Jin-Woo adalah seorang Hunter tingkat paling bawah (<b>E-Rank</b>) yang sering dijuluki sebagai "Hunter Lemah" karena ia selalu terluka parah dan hampir mati di setiap raid demi membiayai pengobatan ibunya yang terbaring koma.</p>
+            </div>
+
+            <div class="lore-box">
+                <h3>[TITIK BALIK: THE SYSTEM]</h3>
+                <p>Saat mengikuti raid dungeon tingkat D, kelompok Jin-Woo terjebak di dalam <i>Double Dungeon</i> yang mematikan. Ketika rekan-rekannya tewas satu per satu, Jin-Woo memilih berkorban. Di ambang kematiannya, sebuah layar biru misterius muncul di hadapannya dan mengangkatnya menjadi satu-satunya <b>Player</b> di dunia yang dapat naik level tanpa batas.</p>
+            </div>
+        </div>
+
+        <!-- SECTION 5: MANHWA ARC -->
+        <div id="comic" class="section-view">
+            <div class="lore-box">
+                <h3>[INFORMASI KOMIK / MANHWA]</h3>
+                <p>Solo Leveling pertama kali dirilis sebagai web novel karya Chugong, lalu diadaptasi menjadi manhwa (komik web Korea) dengan ilustrasi legendaris oleh mendiang <b>Dubu (Redice Studio)</b>.</p>
+                <p><b>Total Chapter:</b> 179 Chapter (Tamat lengkap dalam 2 Season utama).</p>
+            </div>
+
+            <div class="lore-box">
+                <h3>[DAFTAR ARC UTAMA CERITA]</h3>
+                <p><b>1. First Awakening Arc:</b> Pengenalan dunia Hunter dan status E-Rank Sung Jin-Woo.<br>
+                <b>2. Double Dungeon Arc:</b> Kebangkitan sistem dan quest harian penambah statistik.<br>
+                <b>3. Dungeon & Prisoners Arc:</b> Petualangan awal Jin-Woo menyembunyikan kekuatan aslinya.<br>
+                <b>4. Job Change Arc:</b> Perolehan kelas Shadow Monarch dan pertempuran melawan Igris.<br>
+                <b>5. Jeju Island Arc:</b> Invasi besar-besaran ke sarang semut monster dan kemunculan Beru.<br>
+                <b>6. International & Monarchs War Arc:</b> Pertempuran akhir melawan para Monarch demi menyelamatkan bumi.</p>
+            </div>
+        </div>
+
+        <!-- SECTION 6: RANKS -->
+        <div id="ranks" class="section-view">
+            <div class="grid">
+                <div class="ui-card">
+                    <div class="card-content">
+                        <div class="card-title" style="color:var(--text-muted)">E-RANK HUNTER</div>
+                        <div class="card-desc">Level 1 - 10<br>Titik awal keterbatasan fisik manusia biasa.</div>
+                    </div>
+                </div>
+                <div class="ui-card">
+                    <div class="card-content">
+                        <div class="card-title" style="color:var(--accent-purple)">C-RANK HUNTER</div>
+                        <div class="card-desc">Level 11 - 25<br>Reawakened. Mana mulai mengalir stabil.</div>
+                    </div>
+                </div>
+                <div class="ui-card">
+                    <div class="card-content">
+                        <div class="card-title" style="color:var(--gold)">A-RANK HUNTER</div>
+                        <div class="card-desc">Level 26 - 50<br>High Hunter siap menghadapi gerbang berat.</div>
+                    </div>
+                </div>
+                <div class="ui-card">
+                    <div class="card-content">
+                        <div class="card-title" style="color:var(--danger)">S-RANK / MONARCH</div>
+                        <div class="card-desc">Level 51+<br>Puncak kekuatan absolut tanpa tandingan.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <button class="btn danger" style="max-width: 240px; margin: 0 auto;" onclick="resetAccountData()">RESET DATA SISTEM</button>
+        </div>
+    </div>
+
+    <script>
+        let accountData = {
+            level: 1,
+            exp: 0,
+            gold: 0,
+            completedQuests: []
+        };
+
+        window.onload = function() {
+            loadAccountData();
+        };
+
+        function acceptAwakening() {
+            document.getElementById('login-overlay').style.display = 'none';
+        }
+
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function getHunterRank(level) {
+            if (level >= 51) return "S-RANK";
+            if (level >= 26) return "A-RANK";
+            if (level >= 11) return "C-RANK";
+            return "E-RANK";
+        }
+
+        function saveAccountData() {
+            localStorage.setItem('arise_persistent_system', JSON.stringify(accountData));
+        }
+
+        function loadAccountData() {
+            const saved = localStorage.getItem('arise_persistent_system');
+            if (saved) {
+                accountData = JSON.parse(saved);
+                document.getElementById('login-overlay').style.display = 'none';
             } else {
-                statusText.textContent = "PENDING";
-                statusText.className = "text-xs text-amber-400 font-bold tracking-wider";
+                // Jika belum ada data tersimpan, tampilkan modal awakening pertama kali
+                document.getElementById('login-overlay').style.display = 'flex';
+            }
+            updateStatusUI();
+            restoreQuestUI();
+        }
+
+        function resetAccountData() {
+            if (confirm("Reset seluruh data progress latihan sistem?")) {
+                localStorage.removeItem('arise_persistent_system');
+                location.reload();
             }
         }
 
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const newWorkout = {
-                id: Date.now(),
-                name: nameInput.value,
-                sets: setsInput.value,
-                category: categoryInput.value,
-                completed: false
-            };
+        function completeQuest(qId, expAdd, goldAdd) {
+            if (!accountData.completedQuests.includes(qId)) {
+                // Selesaikan Quest
+                accountData.completedQuests.push(qId);
+                accountData.exp += expAdd;
+                accountData.gold += goldAdd;
+                checkLevelUp();
+            } else {
+                // Batalkan Quest (Toggle kembali)
+                accountData.completedQuests = accountData.completedQuests.filter(id => id !== qId);
+                accountData.exp -= expAdd;
+                accountData.gold -= goldAdd;
+                if (accountData.exp < 0) accountData.exp = 0;
+                if (accountData.gold < 0) accountData.gold = 0;
+            }
 
-            workouts.push(newWorkout);
-            saveToLocalStorage();
-            renderWorkouts();
-
-            nameInput.value = '';
-            setsInput.value = '';
-        });
-
-        window.toggleWorkout = function(id) {
-            workouts = workouts.map(w => w.id === id ? { ...w, completed: !w.completed } : w);
-            saveToLocalStorage();
-            renderWorkouts();
+            saveAccountData();
+            updateStatusUI();
+            restoreQuestUI();
         }
 
-        window.deleteWorkout = function(id) {
-            workouts = workouts.filter(w => w.id !== id);
-            saveToLocalStorage();
-            renderWorkouts();
+        function checkLevelUp() {
+            while (accountData.exp >= 100) {
+                accountData.level++;
+                accountData.exp -= 100;
+                alert(`[SYSTEM NOTIFICATION]\nLEVEL UP!\nCurrent Level: ${accountData.level}`);
+            }
         }
 
-        resetBtn.addEventListener('click', () => {
-            workouts = workouts.map(w => ({ ...w, completed: false }));
-            modalShown = false;
-            saveToLocalStorage();
-            renderWorkouts();
-        });
-
-        window.closeModal = function() {
-            successModal.classList.remove('flex');
-            successModal.classList.add('hidden');
+        function updateStatusUI() {
+            document.getElementById('player-level').innerText = accountData.level;
+            document.getElementById('player-exp').innerText = accountData.exp;
+            document.getElementById('player-gold').innerText = accountData.gold;
+            document.getElementById('player-rank').innerText = getHunterRank(accountData.level);
         }
 
-        renderWorkouts();
+        function restoreQuestUI() {
+            document.querySelectorAll('.ui-card[data-id]').forEach(card => {
+                const qId = card.getAttribute('data-id');
+                const btn = card.querySelector('.btn');
+
+                if (accountData.completedQuests.includes(qId)) {
+                    card.style.borderColor = 'var(--success)';
+                    btn.classList.add('cleared');
+                    btn.innerText = '✓ GATE CLEARED';
+                } else {
+                    card.style.borderColor = 'var(--border-color)';
+                    btn.classList.remove('cleared');
+                    btn.innerText = 'CLEAR GATE';
+                }
+            });
+        }
     </script>
 </body>
 </html>
